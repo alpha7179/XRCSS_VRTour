@@ -1,8 +1,100 @@
-﻿<krpano version="1.23" title="2025 PBL">
+﻿<krpano version="1.23" title="2025 PBL" onstart="showlog(); show_start_screen();">
   <include url="skin/vtourskin.xml" />
   <include url="add_hotspot/plugins_l/add_hotspot.xml" />
 
   <plugin name="soundinterface" keep="true" url="%FIRSTXML%/plugins/soundinterface.js" />
+
+  <action name="controls_lock">
+    set(control.usercontrol, off);
+		set(control.mouse, off);
+		set(control.touch, off);
+  </action>
+
+  <action name="controls_unlock">
+    set(control.usercontrol, on);
+		set(control.mouse, on);
+		set(control.touch, on);
+  </action>
+
+  <action name="show_start_screen">
+    trace(asdfasdf);
+    set(layer[start_screen].visible, true);
+  	controls_lock();
+  </action>
+
+  <action name="hide_start_screen">
+    trace(hide_start_screen);
+    set(layer[start_screen].visible, false);
+  controls_unlock();
+  </action>
+
+  <!-- ====== START SCREEN UI (흰 배경 + 타이틀 + Start 버튼) ====== -->
+  <layer
+    name="start_screen"
+    type="container"
+    align="center"
+    x="0"
+    y="0"
+    width="100%"
+    height="100%"
+    bgcolor="0xFFFFFF"
+    bgalpha="1.0"
+    visible="false"
+    zorder="9999"
+    maskchildren="true"
+    enabled="true"
+    handcursor="false"
+    keep="true"
+  >
+    <!-- 타이틀 -->
+    <layer
+      name="start_title"
+      parent="start_screen"
+      type="text"
+      align="center"
+      x="0"
+      y="-120"
+      html="GAME TITLE"
+      css="font-family: Arial, sans-serif; font-size: 44px; font-weight: 800; color: #111; text-align: center;"
+      enabled="false"
+    />
+
+    <!-- START 버튼(배경) -->
+    <layer
+      name="start_btn"
+      parent="start_screen"
+      type="text"
+      align="center"
+      x="0"
+      y="20"
+      width="320"
+      height="80"
+      bgcolor="0x111111"
+      bgalpha="1"
+      roundedge="14"
+      html="START"
+      css="font-family: Arial; font-size: 32px; font-weight:700; color:#fff; text-align:center;"
+      handcursor="true"
+      enabled="true"
+      onclick="hide_start_screen();"
+    />
+  </layer>
+
+  <layer
+    name="dashboard_ui_layer"
+    type="container"
+    keep="true"
+    width="100%"
+    height="100%"
+    bgalpha="0"
+    zorder="10"
+    ath="0"
+    atv="0"
+    handcursor="false"
+    onloaded="setup_dashboard_ui();"
+    vr="false"
+    visible="true"
+  />
 
   <!-- <include url="%VIEWER%/add_hotspot/plugins_l/editor/add_hotspot_2.xml"/> -->
 
