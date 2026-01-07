@@ -1,5 +1,9 @@
-﻿<krpano version="1.23" title="2025 PBL" onstart="showlog(); show_start_screen();">
+﻿<krpano version="1.23" title="2025 PBL" onstart="showlog(); init_xr_flags(); show_start_screen();">
   <include url="skin/vtourskin.xml" />
+
+  <!-- 커스텀: 씬 비활성화/차단 + 상태표시 UI -->
+  <include url="custom_ui.xml" />
+
   <include url="add_hotspot/plugins_l/add_hotspot.xml" />
 
   <plugin name="soundinterface" keep="true" url="%FIRSTXML%/plugins/soundinterface.js" />
@@ -11,9 +15,9 @@
   </action>
 
   <action name="controls_unlock">
-    set(control.usercontrol, on);
-		set(control.mouse, on);
-		set(control.touch, on);
+    set(control.usercontrol, all);
+		set(control.mouse, drag);
+		set(control.touch, drag);
   </action>
 
   <action name="show_start_screen">
@@ -25,8 +29,69 @@
   <action name="hide_start_screen">
     trace(hide_start_screen);
     set(layer[start_screen].visible, false);
-  controls_unlock();
+		set(layer[start_screen].enabled, false);
+		set(layer[start_screen].capture, false);
+		set(layer[start_screen].handcursor, false);
+
+  	controls_unlock();
+		if(is_hmd,
+			trace("is HMD");
+			webvr_enter();,
+			trace("is not HMD");
+		);
+
+		if(can_vr,
+			trace("can HMD");
+			webvr_enter();,
+			trace("can not HMD");
+		);
+    <!-- disable_scene(scene_01_0002); -->
   </action>
+
+  <action
+    name="init_xr_flags"
+    type="Javascript"
+  ><![CDATA[
+		(function(){
+			var krp = krpano; // krpano JS 인터페이스
+
+			function setFlag(isHMD){
+				krp.set("device.is_hmd", isHMD ? "true" : "false");
+				// 필요하면 분기 액션 호출
+				// krp.call(isHMD ? "on_hmd();" : "on_pc();");
+			}
+
+			// 기본값: HMD 아님
+			setFlag(false);
+
+			// WebXR 지원이 없으면 끝
+			if (!navigator.xr) return;
+
+			// XR 세션의 시작/종료를 후킹해서 "현재 HMD 모드인지"를 추적
+			var _requestSession = navigator.xr.requestSession && navigator.xr.requestSession.bind(navigator.xr);
+			if (_requestSession) {
+				navigator.xr.requestSession = function(mode, opts){
+					return _requestSession(mode, opts).then(function(session){
+						if (mode === "immersive-vr") setFlag(true);
+
+						session.addEventListener("end", function(){
+							setFlag(false);
+						});
+
+						return session;
+					});
+				};
+			}
+
+			// (추가) 이미 immersive-vr 가능 여부도 같이 저장해두고 싶다면:
+			if (navigator.xr.isSessionSupported) {
+				navigator.xr.isSessionSupported("immersive-vr").then(function(ok){
+					krp.set("device.can_vr", ok ? "true" : "false");
+				});
+			}
+		})();
+		]]>
+	</action>
 
   <!-- ====== START SCREEN UI (흰 배경 + 타이틀 + Start 버튼) ====== -->
   <layer
@@ -79,22 +144,6 @@
       onclick="hide_start_screen();"
     />
   </layer>
-
-  <layer
-    name="dashboard_ui_layer"
-    type="container"
-    keep="true"
-    width="100%"
-    height="100%"
-    bgalpha="0"
-    zorder="10"
-    ath="0"
-    atv="0"
-    handcursor="false"
-    onloaded="setup_dashboard_ui();"
-    vr="false"
-    visible="true"
-  />
 
   <!-- <include url="%VIEWER%/add_hotspot/plugins_l/editor/add_hotspot_2.xml"/> -->
 
@@ -221,12 +270,12 @@
   <scene
     name="scene_car"
     title="car"
-    onstart=""
     thumburl="panos/car.tiles/thumb.jpg"
     lat="-0.00000000"
     lng="-0.00000000"
     alt="0.00"
     heading="0.0"
+    onstart=""
   >
     <control bouncinglimits="calc:image.cube ? true : false" />
 
