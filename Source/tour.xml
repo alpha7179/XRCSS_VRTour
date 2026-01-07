@@ -1,0 +1,535 @@
+﻿<krpano version="1.23" title="2025 PBL">
+
+	<include url="skin/vtourskin.xml" />
+	<include url="add_hotspot/plugins_l/add_hotspot.xml" />
+
+<plugin name="soundinterface" keep="true" url="%FIRSTXML%/plugins/soundinterface.js" />
+ 
+<!--<include url="%VIEWER%/add_hotspot/plugins_l/editor/add_hotspot_2.xml"/> -->
+
+	<!-- customize skin settings: maps, gyro, webvr, thumbnails, tooltips, layout, design, ... -->
+	<skin_settings maps="true"
+	               maps_type="openstreetmaps"
+	               maps_bing_api_key=""
+	               maps_google_api_key=""
+	               maps_zoombuttons="false"
+	               maps_loadonfirstuse="true"
+	               gyro="true"
+	               gyro_keeplookingdirection="false"
+	               webvr="true"
+	               webvr_keeplookingdirection="true"
+	               webvr_prev_next_hotspots="true"
+	               autotour="false"
+	               littleplanetintro="false"
+	               followmousecontrol="false"
+	               title="true"
+	               thumbs="true"
+	               thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop="0|40|240|160"
+	               thumbs_opened="false"
+	               thumbs_text="true"
+	               thumbs_dragging="true"
+	               thumbs_onhoverscrolling="false"
+	               thumbs_scrollbuttons="false"
+	               thumbs_scrollindicator="false"
+	               thumbs_loop="false"
+	               tooltips_buttons="false"
+	               tooltips_thumbs="false"
+	               tooltips_hotspots="false"
+	               tooltips_mapspots="false"
+	               deeplinking="false"
+	               loadscene_flags="MERGE"
+	               loadscene_blend="OPENBLEND(0.5, 0.0, 0.75, 0.05, linear)"
+	               loadscene_blend_prev="SLIDEBLEND(0.5, 180, 0.75, linear)"
+	               loadscene_blend_next="SLIDEBLEND(0.5,   0, 0.75, linear)"
+	               loadingtext=""
+	               layout_width="100%"
+	               layout_maxwidth="814"
+	               controlbar_width="-24"
+	               controlbar_height="40"
+	               controlbar_offset="20"
+	               controlbar_offset_closed="-40"
+	               controlbar_overlap.no-fractionalscaling="10"
+	               controlbar_overlap.fractionalscaling="0"
+	               design_skin_images="vtourskin.png"
+	               design_bgcolor="0x2D3E50"
+	               design_bgalpha="0.8"
+	               design_bgborder="0"
+	               design_bgroundedge="1"
+	               design_bgshadow="0 4 10 0x000000 0.3"
+	               design_thumbborder_bgborder="3 0xFFFFFF 1.0"
+	               design_thumbborder_padding="2"
+	               design_thumbborder_bgroundedge="0"
+	               design_text_css="color:#FFFFFF; font-family:Arial;"
+	               design_text_shadow="1"
+	               />
+
+
+	               <plugin name="soundinterface"
+	        url.flash="%VIEWER%/plugins/soundinterface.swf"
+	        url.html5="%VIEWER%/plugins/soundinterface.js"
+	        rootpath=""
+	        preload="true"
+	        keep="true"
+	        />
+
+	
+	<layer name="snd" style="skin_glow" keep="true"  type="image" url="%VIEWER%/skin/sound_btn.png" align="left" x="180" y="0" alpha="1" scale="0.5" onover="tween(alpha,1);" onout="tween(alpha,1);" devices="html5"
+	       crop="0|0|60|60"
+	       onclick="pausesoundtoggle(bgsound); switch(crop, 0|0|60|60, 60|0|60|60);" parent="layer[skin_control_bar]"
+	       />
+	       
+	<events name="sound_events" keep="true"
+		onnewpano="set(layer[skin_btn_sound].crop, 0|0|60|60);"
+	/> 
+
+
+	<!-- startup action - load the first scene -->
+	<action name="startup" autorun="onstart">
+		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+		loadscene(get(startscene), null, MERGE);
+		if(startactions !== null, startactions() );
+			playsound(bgsound, 'mp3/001.mp3', 0);
+	</action>
+
+
+	
+
+	<include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/sound_hs.xml"/>
+	<include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/vid_hs.xml"/>
+
+	<!--
+	    For an alternative skin design either change the <skin_settings> values 
+	    from above or optionally include one of the predefined designs from below.
+
+
+	-->
+     
+	<!-- <include url="skin/vtourskin_design_flat_light.xml"  /> -->
+	<!-- <include url="skin/vtourskin_design_glass.xml"       /> -->
+	<!-- <include url="skin/vtourskin_design_ultra_light.xml" /> -->
+	<!-- <include url="skin/vtourskin_design_117.xml"         /> -->
+	<!-- <include url="skin/vtourskin_design_117round.xml"    /> -->
+	<!-- <include url="skin/vtourskin_design_black.xml"       /> -->
+	<include url="skin/vtourskin_design_ultra_light.xml" />
+
+	
+		<!-- *** add hotspt *** -->
+
+	<include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/vid_hs.xml"/>
+
+
+	
+<scene name="scene_car" title="car" onstart="" thumburl="panos/car.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="3.642" vlookat="6.215" fovtype="MFOV" fov="126.033" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/car.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/car.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+<scene name="scene_01_0001" title="01-0001" onstart="" thumburl="panos/01_0001.tiles/thumb.jpg" lat="37.41110056" lng="127.03516833" alt="239.40" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/01_0001.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/01_0001.tiles/pano_%s.jpg" />
+		</image>
+
+	
+		
+		<hotspot name="hsp_0_3" style="vid_hs_addhs" onover="tween(scale,1.6);" onout="tween(scale,1.5);" width="278.34" height="392.85" scalez="1.500" ox="288.17" oy="124.93" rotate="-4.32" scale="1.5" ath="-52.4347" atv="17.8539" alphachannel="inline" chromakey="0x0B9600|0.550|0.130" rx="6.41" ry="28.17" rz="13.42" videourl="%FIRSTXML%/add_hotspot/video/케릭터1.mp4" info_ah="케릭터1.mp4" play_vh="true" volume_adhs="0.43" />
+
+		<hotspot name="hsp_0_4" ready="true" style="link_hs_sm" capturewheel="false" onclick="loadscene(scene_01_0002,null,MERGE,BLEND(0.5));" scalez="0.578" url="%FIRSTXML%/add_hotspot/picture/001.png" scale="0.578" ath="-63.8517" atv="3.3063" distorted="true" install_onclick="15" colorize="16777215" brightness="1" contrast="1" saturate="1" hue="0" invert="0" sepia="0" hs_linkedscene="scene_01_0002" />
+	</scene>
+
+	<scene name="scene_01_0002" title="01-0002" onstart="" thumburl="panos/01_0002.tiles/thumb.jpg" lat="37.41153667" lng="127.03511556" alt="260.30" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/01_0002.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/01_0002.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_01_0005_1" title="01-0005_1" onstart="" thumburl="panos/01_0005_1.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/01_0005_1.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/01_0005_1.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_01_0007" title="01-0007" onstart="" thumburl="panos/01_0007.tiles/thumb.jpg" lat="37.41212889" lng="127.03561722" alt="267.20" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/01_0007.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/01_0007.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_02_0001" title="02-0001" onstart="" thumburl="panos/02_0001.tiles/thumb.jpg" lat="37.39549139" lng="127.02301889" alt="123.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/02_0001.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/02_0001.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_02_0002" title="02-0002" onstart="" thumburl="panos/02_0002.tiles/thumb.jpg" lat="37.39563056" lng="127.02347194" alt="136.80" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/02_0002.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/02_0002.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_02_0007" title="02-0007" onstart="" thumburl="panos/02_0007.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/02_0007.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/02_0007.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_03_001" title="03-001" onstart="" thumburl="panos/03_001.tiles/thumb.jpg" lat="37.30625000" lng="126.95266667" alt="55.40" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/03_001.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/03_001.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_03_002" title="03-002" onstart="" thumburl="panos/03_002.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/03_002.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/03_002.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_04_001" title="04_001" onstart="" thumburl="panos/04_001.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/04_001.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/04_001.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_04_002" title="04_002" onstart="" thumburl="panos/04_002.tiles/thumb.jpg" lat="37.32825000" lng="126.95172222" alt="68.80" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/04_002.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/04_002.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_04_003" title="04_003" onstart="" thumburl="panos/04_003.tiles/thumb.jpg" lat="37.32833333" lng="126.95169444" alt="74.80" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/04_003.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/04_003.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_05_001" title="05_001" onstart="" thumburl="panos/05_001.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/05_001.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/05_001.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_05_002" title="05_002" onstart="" thumburl="panos/05_002.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/05_002.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/05_002.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_05_003" title="05_003" onstart="" thumburl="panos/05_003.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/05_003.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/05_003.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_05_004" title="05_004" onstart="" thumburl="panos/05_004.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/05_004.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/05_004.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_05_005" title="05_005" onstart="" thumburl="panos/05_005.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/05_005.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/05_005.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_06_001" title="06_001" onstart="" thumburl="panos/06_001.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/06_001.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/06_001.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_06_002" title="06_002" onstart="" thumburl="panos/06_002.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/06_002.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/06_002.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_06_003" title="06_003" onstart="" thumburl="panos/06_003.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/06_003.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/06_003.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_06_004" title="06_004" onstart="" thumburl="panos/06_004.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/06_004.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/06_004.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_06_005" title="06_005" onstart="" thumburl="panos/06_005.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/06_005.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/06_005.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_07_001" title="07-001" onstart="" thumburl="panos/07_001.tiles/thumb.jpg" lat="37.30987917" lng="126.95061889" alt="64.60" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/07_001.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/07_001.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_07_003" title="07-003" onstart="" thumburl="panos/07_003.tiles/thumb.jpg" lat="37.30853444" lng="126.95083111" alt="47.80" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/07_003.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/07_003.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_07_005" title="07-005" onstart="" thumburl="panos/07_005.tiles/thumb.jpg" lat="37.30963944" lng="126.95063861" alt="67.30" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/07_005.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/07_005.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_08_002" title="08-002" onstart="" thumburl="panos/08_002.tiles/thumb.jpg" lat="37.30696056" lng="126.95274806" alt="63.70" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/08_002.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/08_002.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_08_003" title="08-003" onstart="" thumburl="panos/08_003.tiles/thumb.jpg" lat="37.30802389" lng="126.95201944" alt="66.00" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/08_003.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/08_003.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_08_004" title="08-004" onstart="" thumburl="panos/08_004.tiles/thumb.jpg" lat="37.30786944" lng="126.95177111" alt="65.20" heading="0.0">
+		
+		<control bouncinglimits="calc:image.cube ? true : false" />
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/08_004.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/08_004.tiles/pano_%s.jpg" />
+		</image>
+
+	</scene>
+
+	
+
+</krpano>
