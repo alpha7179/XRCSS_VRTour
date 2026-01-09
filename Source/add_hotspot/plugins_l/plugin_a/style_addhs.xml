@@ -1,18 +1,30 @@
 <krpano>
+	
+	 <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/poligon.xml"/> 
+	 <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/photo.xml"/> 
+	 <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/video.xml"/>
+	 <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/vid_hs.xml"/>
+	 <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/youtube.xml"/>
+	 <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/sound_hs.xml"/>
+
 
 	<action name="include_showtext" autorun="onstart">
-		delayedcall(1, includexml(%FIRSTXML%/plugins/showtext.xml ));
+		calc(showt , addhs_settings.path + '../plugins/showtext.xml' );
+		<!-- delayedcall(1, includexml(get(showt))); -->
+		delayedcall(1,  includexml(%FIRSTXML%/plugins/showtext.xml) )
 	</action>
 
 	<!-- ///////////////////    Project settings  /////////////////////////  -->
-	<!--  	 -->
+	<!--  addhs_settings.xml_clipboard	 -->
 	<addhs_settings 
 		sound_close_click="true"
 		video_close_click="true"
 		youtube_close_click="true"
 		firstxml="tour"
 		path="%FIRSTXML%/"
-		backup="true"
+		backup="false"
+		get_img="true"
+		xml_clipboard ="true"
 	/>
 	
 
@@ -21,57 +33,57 @@
 	<!-- <css_slaider path="add_hotspot/editor/css/style.css" />	 -->
 	
 	<!-- Style image  hotspot --> 
-	<style name="link_hs_sm" keep="false" type="image" width="100" height="prop"  zorder="5" depth="1000"  ondown.addevent="drag_LinkSM();" title="" drag_hs="true" adhs="true"  />
+	<style name="addhs" keep="false" type="image" width="100" height="prop"  zorder="5" depth="1000" title="" drag_hs="true" new_hs="" />
+	
 
 	<!-- text hotspot style   editenterkey="newline" bgborder="1,1,1,1 0xffffff 1.0" --> 
-    <style	name="text_hs_sm" keep="false" type="text" html="" capture="true" edge="center" width="" height="" alpha="1" scale="1"  zorder="6" 
-			css="font-family:Arial; font-size:16px; color:#FFFFFF; text-align:center;" txtshadow="0 0 0 0х000000 0.5"  
-			padding="10 10 10 10" vcenter="true" oversampling="2" bgcolor="0x000000" bgalpha="0.5"  bgroundedge="3"  bgborder="1,1,1,1 0xffffff 1"
-			ondown.addevent="if(pin_aktivirovan,drag_LinkSM());" editable="false"
-			install_onclick="12" drag_hs="true" title="" adhs="true" interactive="false"
+    <style	name="text_hs_sm" keep="false" type="text" html="" capture="true" edge="center" width="" height="" alpha="1" scale="1"  zorder="6" colorize="0xFFFFFF" blur="0" saturate="1" brightness="1"
+			css="font-family:Verdana; font-size:16px; color:#FFFFFF;" txtshadow="0 0 0 0х000000 0.5"  textalign="center" bgshadow="2 2 5 0х000000 0.3" 
+			padding="10 10 10 10"  oversampling="2" bgcolor="0x000000" bgalpha="0.5"  bgroundedge="3"  bgborder="1,1,1,1 0xffffff 1.00"   editable="false" interactive="false"  
+			 drag_hs="true" title="" new_hs="" 
 		/>	
 	
 	<!-- Style sound . hotspot[get(name)].loadstyle(sound_hs)   assignstyle(hotspot[get(name)], 'sound_hs') -->
-	<style name="sound_hs" keep="false" onclick="click_s_hs(); if(action[stop_all_video_hs], stop_all_video_hs());" install_onclick="9" volume_adhs="0.5" loop_s="false" sound3d="false" range_sound="90" newscen_stopsoud="true" info_ah="" drag_hs="true"  zorder="5"  ondown.addevent="if(pin_aktivirovan,drag_LinkSM());"  title="" adhs="true"   />
+	<style name="sound_hs" keep="false"  zorder="5" newscen_stopsoud="true" drag_hs="true" title="" new_hs=""   />
 
 	<!-- Стиль видео хотспотов  Когда началось воспроизведение - play_vh true статус текущего воспроизведения для памяти при переходе на другую сцену 
 		 Style of video hotspots When playback started - play_vh true the status of the current playback for memory when moving to another scene --> 
-    <style	name="vid_hs_addhs" keep="false" url.html5="%FIRSTXML%/plugins/videoplayer.js" url.flash="%FIRSTXML%/plugins/videoplayer.swf" adhs="true" 
-			 capture="true" distorted="true" zorder="5" videourl="" info_ah="" loop="false" playbackrate="1" onvideoplay="set(play_vh,true);" play_vh="false"
+    <style	name="vid_hs_addhs" type="plugin" keep="false" url.html5="%FIRSTXML%/plugins/videoplayer.js" new_hs="" 
+			 capture="true" distorted="true" zorder="5" videourl="" loop="false" playbackrate="1" onvideoplay="set(play_vh,true);" play_vh="false"  
 			newscen_stopsoud="true" vsound3d="false" range_sound="90" volume_max="0.5" drag_hs="true" title=""
-			width="300" height="prop" edge="center" alpha="1" scale="1"  handcursor="true" depth="1000" posterurl=""
-			install_onclick="11" pausedonstart="true" volume="0.5" onvideopaused=""
+			width="300" height="prop" edge="center" alpha="1" scale="1"  handcursor="true" depth="1000" posterurl="" 
+			 pausedonstart="true" volume="0.5" onvideopaused=""
 			onclick="togglepause(); if(sound[sound_hs_addhs], delete_sound_hs_addhs(); );   if(ispaused, set(play_vh,true);, set(play_vh,false); );" 
-			onout=""  onover=""  onhover="" onloaded=""  ondown.addevent="if(pin_aktivirovan,drag_LinkSM());"  
+			onout=""  onover=""  onhover="" onloaded=""   
 		/>
 		
 	<!-- Polygonal hotspot style -->
-	<style name="pl_hs_add_hs" keep="false" adhs="true" alpha="1" alpha2="1" capture="false" handcursor="true" zorder="10" install_onclick="14" fov_el="90" fillcolor="0x1500FF" fillcolor2="0xE80606"  fillalpha="0.5" fillalpha2="0.69" borderwidth="2" borderwidth2="2" bordercolor="0xFF2B00" bordercolor2="0xFFEE00" borderalpha="1" borderalpha2="1.00" onover="set_pol_2(get(name));" onout="set_pol_1(get(name));"  ondown.addevent="if(pin_aktivirovan,ondown_pl_hs());" blendmode="normal" group="" fillcol2="E80606" bordercol2="FFEE00" polyline="false" borderzoom="0" borderhittest="false" 
-	onloaded="set_mem_pol(get(name));"/>	
+	<style name="pl_hs_add_hs" keep="false" new_hs="" alpha="1" alpha2="1" capture="false" handcursor="true" zorder="10"  fov_el="90" fillcolor="0x1500FF" fillcolor2="0xE80606"  fillalpha="0.5" fillalpha2="0.69" borderwidth="2" borderwidth2="2" bordercolor="0xFF2B00" bordercolor2="0xFFEE00" borderalpha="1" borderalpha2="1.00" onover="set_pol_2(*name);" onout="set_pol_1(*name);"  blendmode="normal" group="" fillcol2="E80606" bordercol2="FFEE00" polyline="false" borderzoom="0" borderhittest="false" 
+	onloaded="set_mem_pol(*name);"/>	
 	
-
 	
+	
+	
+	
+ 
 	<!-- *************//////////////////////////////////////////////////////////////*********** -->
+	
+	
+	
+	
 	
 	
 	<!-- the style pop-up text when you hover your mouse over the link . Текст при наведении мыши-->
 	<textstyle name="STYLE1_LinkSM"
-	           font="Arial" fontsize.no-mobile="18" fontsize.mobile="16" bold="false" italic="false" xoffset="0" yoffset="-20"
-	           background="true" backgroundcolor="0x006868" backgroundalpha="0.9"
-	            borderwidth="0" bordercolor="0xFFFFFF" roundedge="3"
-	           textcolor="0xFFFFFF"
-	           padding="4 5"
-	           textalign="center"    
-			    
+	           font="Verdana" fontsize="18"  bold="false" italic="false" xoffset="0" yoffset="-20"
+	           background="true" backgroundcolor="0x383838" backgroundalpha="0.9" borderwidth="0"  roundedge="3"
+	           textcolor="0xFFFFFF" padding="4 5" 
 	           />	
 			   
 	<textstyle name="STYLE1_LinkSM2"
-	           font="Arial" fontsize.no-mobile="17" bold="false" italic="false" xoffset="0" yoffset="-20"
-	           background="true" backgroundcolor="0x006868" backgroundalpha="0.8"
-	            borderwidth="0" bordercolor="0xFFFFFF" roundedge="3"
-	           textcolor="0xFFFFFF"
-	           padding="4 5" txtshadow="3 3 4 0x000000 0.5"
-	           textalign="center"           
+	           font="Verdana" fontsize="12" bold="false" italic="false" xoffset="0" yoffset="-20"
+	           background="true" backgroundcolor="0x383838" backgroundalpha="0.8"  borderwidth="0"  roundedge="3"
+	           textcolor="0xFFFFFF"  padding="4 5" txtshadow="3 3 4 0x000000 0.5" 
 	           />			   
  			
 	<!-- Фон  -->
@@ -98,9 +110,9 @@
 	/>
 	
 	<!-- play video    Кнопка плей видео -->	   
-	<layer name="play_vid_icon"  keep="true" align="center"  url="icon/play.png"
-			zorder="100" enabled="false" visible="false" scale="0.7"
-	        width="100" height="prop" alpha="0" edge="center" bgcapture="false" handcursor="false" 
+	<layer name="play_vid_icon"  keep="true" align="center"  url="icon/play.png"  visible="true"
+			zorder="100" enabled="false"  scale="0.7"
+	        width="100" height="prop" alpha="0" autoalpha="true" edge="center" bgcapture="false" handcursor="false" 
 	/>
 	<!-- close_freim_url   Кнопка закрыть -->	   
 	<layer name="close_freim_url_addhs"  keep="true" align="righttop" x="35"  y="23" url="icon/close.png" zorder="51" enabled="false"
@@ -113,12 +125,24 @@
 
 
 
-	<!-- //////////////////////////____________SOUND____________//////////////////////////// -->
+	<!-- //////////////////////////____________SOUND____________//////////////////////////// -->	
+	
+	<!-- 	
+	sound_bar 				- показать панель звука
+			volume_icon_right  	-показать иконку громкости справа
+			speaker_icon 			- показать иконку 
+	-->
+	
+	<sound_hs
+		sound_bar="true"
+		volume_icon_right="true"
+		speaker_icon="true"
+	/>
 	
 	
-	<!-- Sound -->
 	<!-- <style name="soundadhs" url="%FIRSTXML%/plugins/soundinterface.js" />	 -->
-	<style name="sound_panel_adhs" enabled="false"   url="%SWFPATH%/plugins/textfield.swf"  css="font-family:Arial; color:#00E5FF; font-size:14px;" 
+	
+	<style name="sound_panel_adhs" enabled="false"   url="%SWFPATH%/plugins/textfield.swf"  css="font-family:Verdana; color:#00E5FF; font-size:14px;" 
 		    x="0" y="0" padding="3 7" keep="true" align="lefttop" background="false" backgroundcolor="0x2D3E50" backgroundalpha="0.7"			   
 			 bordercolor="0xFFFFFF" borderalpha="0.8" borderwidth="1.0"	roundedge="2"   bgshadow="5 5 3 0x2D3E50 0.0"  
 			txtshadow="0 0 4 0x000000 1.0"  
@@ -129,28 +153,23 @@
 	onloaded="calc(x, (stagewidth - width) / 2)" ondown="drag_pan_addhs();" />
 	
 	<!--  Иконка динамик звук. хотспотов --> 
-    <style name="vidsound_hs_addhs2" keep="false" url="icon/dinamik.png" capture="true" zorder="60" width="40" height="prop" distorted="false" handcursor="true" 
-			onclick="delete_sound_hs_addhs();"	/>
+    <style name="vidsound_hs_addhs2" keep="false" url="icon/speaker.png" edge="center" capture="true" zorder="60" width="30" height="prop" distorted="false" handcursor="true" 
+			onclick="delete_sound_hs_addhs();" ox="0"	oy="0" />
 		
 	<!-- Палец громкости  -->
 	<layer name="volume_finger"  keep="true" url="icon/volume_finger.png" align="right" x="15"  y="0" scale="0.4" enabled="false" alpha="0" zorder="51" /> 	
 
-	<sound_hs
-		sound_bar="true"
-		volume_icon_right="true"
-		speaker_icon="true"
-	/>
 	
 	<!-- ***************  Блок с кнопками и временнОй шкалой ***************** -->		
 	   
-	 <layer name="panel_uprav_sound" style="sound_bar" alpha="0" width="284" visible="false" enabled="false"  >
+	 <layer name="panel_uprav_sound" style="sound_bar" alpha="0" width="284" autoalpha="true"  enabled="true" >
 		<!-- плей-пауза -->
 		<layer name="skin_playpauseSound" keep="true"  url="icon/vtourskin.png" align="left" crop="64|0|64|64"  x="5" y="0" scale="0.3" alpha="0.5"
 			   onclick="togglesound(get(teksoundadhs)); if(sound[get(teksoundadhs)].stopAD, set(crop,'64|0|64|64');, set(crop,'0|0|64|64'); ); " 
 				onover="tween(alpha,1,0.2);" onout="tween(alpha,0.5,0.2);"  />	
 		
 		<!-- Значек 3D под слоем значка громкости-->
-		<layer 	name="text_3D_addshs"  style="sound_panel_adhs" css="font-family:Arial; color:#00E5FF; font-size:15px;" enabled="true" align="left" x="47"  y="0" html="[b]3D[/b]"  />
+		<layer 	name="text_3D_addshs"  style="sound_panel_adhs" css="font-family:Verdana; color:#00E5FF; font-size:15px;" enabled="true" align="left" x="47"  y="0" html="[b]3D[/b]"  />
 		<!-- Громкость -->
 		<layer name="volumeGV3" keep="true" type="container" width="31" height="32"  x="28" y="0" alpha="0.5" align="left"
 			   bgcapture="true" children="false" 
@@ -228,9 +247,126 @@
 	
 	
 	
+	
+	
+	<!-- //////////////////////////____________VIDEO____________//////////////////////////// -->	
+	
+	
+	<!-- <style 	name="videoplayer_SM" keep="true" type="container" zorder="50" />  -->
+	
+	<!-- Контейнер под громкость -->
+	<style name="volume_tab_Adhs_st" type="container" keep="true"  width="15%" height="100%" y="0" x="0" align="right"  alpha="1" enabled="true" zorder="51"
+			bgcapture="true" bgcolor="0x666666" bgalpha="0"
+			ondown="volume_ondown2_vid_addhs(); tween(layer[vol_polosa_addhs].alpha,1,0.2);"
+			onup="tween(layer[vol_polosa_addhs].alpha,0);"
+    /> 
+	
+	<!-- //////////////////  панель управления  ///////////////// -->
+  	<!-- Стиль текста -->         		   
+	<style name="vremya_addhs" enabled="false"   url="%SWFPATH%/plugins/textfield.swf" css="font-family:Verdana; color:#FFFFFF; font-size:11px;" 
+		    padding="3 7" keep="true" align="lefttop" background="false" backgroundcolor="0x2D3E50" backgroundalpha="0.7"	
+			txtshadow="0 0 4 0x000000 1.0"
+			wordwrap="false" 
+		  />
+	
+	<!-- ***********************************  Блок с кнопками и временной шкалой *********************************** -->		
+   
+ <layer name="blok_vid_addhs" type="container" keep="true" bgcolor="0x2D3E50" bgalpha="0.6"  align="leftbottom" width="100%" height="" maskchildren="true" handcursor="false" zorder="52" > 
+
+	<!-- плей-пауза -->
+    <layer name="skin_playpause" keep="true" url="icon/vtourskin.png" crop="64|0|64|64"  x="10" y="5" scale="0.3" alpha="0.5"
+	       onclick="layer[videoplayer_Adhs].togglepause();" />	
+	<!-- Громкость -->
+	<layer name="volume_vid_addhs" keep="true"  type="container" width="32" height="32"  x="40" y="5" alpha="0.5" visible.mobile="false" enabled.mobile="false"
+		   bgcapture="true" children="false" 
+		   onover="tween(alpha, 1); 
+					stopdelayedcall(skin_autohide);
+					stopdelayedcall(autoclose_volumectrl); 
+					open_volum_vid_addhs();" 
+		   onout="tween(alpha,0.5); 
+					if(layer[volumePan_vid_addhs].pressed == false, delayedcall(autoclose_volumectrl, 0.5, close_volume_vid_addhs()); );" 
+		    onclick="if(layer[volumePan_vid_addhs].alpha == 1.0, 
+							if(plugin[videoplayer_Adhs].volume GT 0.0,
+								set(vol_vid_temp,get(layer[videoplayer_Adhs].volume));							
+								set(plugin[videoplayer_Adhs].volume,0.0);
+								volumectrl_update_vid_addhs(); 
+								, 
+								if(vol_vid_temp !== 'non', set(layer[videoplayer_Adhs].volume, get(vol_vid_temp)));
+								volumectrl_update_vid_addhs(); 
+							);
+					   );"
+		>
+			<layer name="volume_beg_vid_addhs" keep="true" url="icon/vtourskin.png " crop="64|0|64|64" scale="0.3" align="lefttop" />
+	</layer>
+	
+	<!-- Время -->
+	<layer name="vremya_addhs1" type="text" keep="true" align="righttop"  x="4" y="5" css="font-family:Verdana; color:#FFFFFF; font-size:13px;" enabled="false"  html="" 
+			background="false" padding="3 7" txtshadow="0 0 4 0x000000 1.0" />	
+	
+	
+  <!-- **************************  ВременнАя полоса воспроизведения ********************************* -->	
+	<!-- Невидимый контейнер для тайм линии  --> 
+	<layer name="time_lin_vid_addhs" type="container"  keep="true"  align="left"  height="100%" width="-180" x="75" y="0" visible="true"  enabled="true" alpha="1" 
+				bgcapture="true" bgcolor="0x006666" bgalpha="0.0"  zorder="55" 
+				onover="set(layer[time_lin_vid2_addhs].height,5 ); "
+				onout="set(layer[time_lin_vid2_addhs].height,3 ); "
+				ondown="scrab_liniya();" >
+				
+		<!-- Полоса -->  
+		<layer name="time_lin_vid2_addhs" type="container"  keep="true"  align="left"  height="3" width="100%" x="0" y="0" visible="true"  enabled="false"  
+					bgcapture="true" bgcolor="0x666666" bgalpha="0.8" bgroundedge="2" bgshadow="2 2 4 0x000000 0.5" zorder="55" >
+				<!--  Заполняющая полоса загрузки видео   -->   
+				<layer 	name="load_video_addhs" type="container" keep="true"  bgcapture="false"  width="" height="100%" x="0" align="left" 
+						bgcolor="0xCCCCCC" bgalpha="0.4"  bgroundedge="2" bgshadow="2 2 4 0x000000 0.5"  zorder="12"  /> 
+				<!--  Заполняющая полоса  воспроизведения -->   
+				<layer 	name="time_indik_vid_addhs" type="container" keep="true"  bgcapture="false"  width="" height="100%" x="0" align="left"
+						bgcolor="0x03b610" bgalpha="0.4"  bgroundedge="2" bgshadow="2 2 4 0x000000 0.5"  zorder="12"  >
+					<!-- Шарик -->	   
+					<layer name="sharik_vid1" keep="true" align="right" edge="center" url="icon/gr.png"  x="0" y="0" scale="0.3" alpha="1" enabled="false" />		
+				</layer>	
+		</layer>
+	</layer>	
+	
+ </layer>
+ 
+ 
+ <!-- ********************************* Панель регулировки громкости *************************************** -->
+	
+	<!-- расскрывающийся слайдер громкости  -->
+	<layer 	name="volumePan_vid_addhs" keep="true" type="container" align="leftbottom" width="20" height="110" x="37" y="35"  alpha="0.0" autoalpha="true" parent=""
+			bgcolor="0x2D3E50" bgalpha="0.4" bgborder="" bgroundedge="1" bgshadow="2 2 4 0x000000 0.3" bgcapture="true" 
+			onover="stopdelayedcall(autoclose_volumectrl); " 
+			onout="if(pressed == false, delayedcall(autoclose_volumectrl, 0.5, close_volume_vid_addhs()); );" 
+			ondown="stopdelayedcall(autoclose_volumectrl); volume_ondown_vid_addhs();" 
+			onup="onout();">
+		<layer name="polosa_beg_vid_addhs" type="container" bgcolor="0xFFFFFF" bgalpha="0.25" align="center" width="4" height="-32">
+				<!-- Бегунок -->
+				<layer name="begun_vid_addhs" type="container"  align="top" edge="center" x="0" bgroundedge="8" width="10" height="10" 
+					   bgcolor="0xFFFFFF" bgalpha="1.0" bgshadow="2 2 4 0x000000 0.3"/>
+		</layer>
+	</layer>
+	
+	
+	<!-- Индикация громкости на экране  (Динамик с полоской снизу) -->  
+	<layer name="vol_polosa_addhs" type="container"  keep="true"  align="bottom"  height="5" width="100" x="0" y="15%" visible="true"  enabled="false"  alpha="0"
+			bgcapture="true" bgcolor="0x666666" bgalpha="0.8" bgroundedge="2" bgshadow="2 2 4 0x000000 0.5" zorder="55" >
+		<!--  Бегунок ,ondown="copy(drag_currentx,x); copy(drag_stagex,mouse.stagex); dragging_beg_vid_addhs(time_lin_vid_addhs,timeGlV,totaltimeGLV);" -->   
+		<layer 	name="vol_begun_addhs" type="container" keep="true"  bgcapture="false"  width="" height="100%" x="0" align="left"
+				bgcolor="0x03b610" bgalpha="0.5"  bgroundedge="2" bgshadow="2 2 4 0x000000 0.5"  zorder="12"  />
+		<!-- Иконка динамика   -->		
+		<layer  name="icon_vol_video_addhs"  keep="true" url="icon/dinamik.png" align="center" y="-50" height="50" width="prop" enabled="false" visible="true" alpha="0.8" zorder="55" />
+	</layer>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	<!-- ////////////////////////////_________PHOTO ____________///////////////////////////////////// -->
-	
 	
 	
 	<!-- открыть фотографию  -->	
@@ -243,9 +379,9 @@
 	<style name="pl_min_ph" type="image" url="icon/plus_minus.png" keep="true" align="right"  width="35" height="prop" y="-20" crop="0|0|64|64" alpha="0.5" onover="set(alpha,1)" onout="set(alpha,0.5)" />
 	
 	<!-- Close photo button. Кнопка закрыть фотографию -->	   
-	<layer name="close6_photo"  keep="true" align="righttop" x="25"  y="22" url="icon/close.png" zorder="55" enabled="false"
-	        width="20" height="prop" alpha="0" edge="center" visible="true" bgcapture="true" handcursor="true"
-	        onover="tween(width,25,0.2);" onout="tween(width,20,0.2);" onclick="delayedcall(0.3,close_photo_add_hs();); tween(alpha,0); set(enabled,false);"/>
+	<layer name="close6_photo"  keep="true" align="righttop" x="25"  y="22" url="icon/close.png" width="20" height="prop" alpha="0" autoalpha="true" zorder="55" 
+	       edge="center" bgcapture="true"  
+	        onover="alpha = 1;" onout="alpha = 0.5;" onclick="delayedcall(0.3,close_photo_add_hs();); tween(alpha,0);  "/>
 	
 	<!-- Фон под фото  -->
 	<layer name="bg_Adhs_photo" style="freim_bg_Adhs" enabled="false" onclick="if(addhs_settings.sound_close_click, close_photo_add_hs());"	/>
@@ -258,7 +394,7 @@
  	</layer>  	
 	
 	<!-- Стиль подписи фото -->         		   
-	<style name="tit_ph_styl_adhs" enabled="false" type="text" css="font-family:Comic Sans MS, Comic Sans, cursive, Arial; color:#FFFFFF; font-size:20px; text-align:center " 
+	<style name="tit_ph_styl_adhs" enabled="false" type="text" css="font-family:Comic Sans MS, Comic Sans, cursive, Verdana; color:#FFFFFF; font-size:20px; text-align:center " 
 		    x="0" y="0"  padding="7 10" keep="true" align="top" edge="top" zorder="52" alpha="0" width="100%" 
 			background="true" backgroundcolor="0x000000" backgroundalpha="0.3" 			   
 			 bordercolor="0xFFFFFF" borderalpha="0" borderwidth="0" roundedge="0"      
@@ -297,6 +433,14 @@
 				https://developers.google.com/youtube/player_parameters#Parameters
 			-например установить элементы управления = 0, чтобы удалить элемент управления YouTube по умолчанию
 	-->
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	 
 	<!-- ///////////////////    popup   БЛОК ФРЕЙМ HTML   ///////////////////////// -->
 
@@ -376,9 +520,9 @@
 		set(control.invert,false);
 	</action>
 
-	<!-- Показать текст при наведении  -->
+	<!-- Показать текст при наведении  add_hotspot/plugins_l/plugin_a/ STYLE1_LinkSM -->
     <action name="showtit">
-			 showtext(get(hotspot[get(name)].title), STYLE1_LinkSM));
+		showtext(get(hotspot[*name].title), STYLE1_LinkSM));
 	</action>	
 	
  

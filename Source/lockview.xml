@@ -1,0 +1,72 @@
+<krpano>
+  <action name="apply_view_lock_for_scene">
+    if(scene[get(xml.scene)].lockview == true,
+      lock_view_all();
+    ,
+      unlock_view_all();
+    );
+  </action>
+
+  <events
+    name="viewlock_events"
+    keep="true"
+    enabled="true"
+    onnewscene="apply_view_lock_for_scene();"
+    onloadcomplete="apply_view_lock_for_scene();"
+  />
+
+  <action name="lock_view_all">
+    if(lock_state != true, 
+      set(lock_state, true);
+
+      if(lock_saved != 1,
+        set(lock_saved, 1);
+        copy(_old_usercontrol, control.usercontrol);
+        copy(_old_mouse,       control.mouse);
+        copy(_old_touch,       control.touch);
+        copy(_old_wheel,       control.wheel);
+        copy(_old_zoom,        control.zoom);
+        copy(_old_dragging,    control.dragging);
+        copy(_old_vr_enabled,  vr.enabled);
+
+      );
+    <!-- 현재 씬에 지정된 각도로 고정(원하는 값으로 set 가능) -->
+    tween(view.hlookat, get(scene[get(xml.scene)].hlookat), 5.0);
+      tween(view.vlookat, get(scene[get(xml.scene)].vlookat), 5.0);
+    <!-- PC/모바일 드래그/휠 회전 입력 차단 -->
+    set(control.usercontrol, off);
+      set(control.mouse, off);
+      set(control.touch, off);
+      set(control.wheel, off);
+    <!-- 관성/자동회전 등도 끄기 -->
+    set(control.invert_drag, false);
+      set(control.fovspeed, 0);
+      set(control.zoomspeed, 0);
+    <!-- (중요) VR/HMD 헤드트래킹 차단 -->
+    set(vr.enabled, false);
+    );
+  </action>
+
+  <action name="unlock_view_all">
+    if(lock_state == true, 
+      set(lock_state, false);
+
+      if(lock_saved == 1,
+        set(control.usercontrol, get(_old_usercontrol));
+        set(control.mouse,       get(_old_mouse));
+        set(control.touch,       get(_old_touch));
+        set(control.wheel,       get(_old_wheel));
+    <!-- VR 다시 허용(프로젝트에서 VR을 쓰는 경우) -->
+    set(vr.enabled,          get(_old_vr_enabled));
+
+        set(lock_saved, 0);
+      ,
+    <!-- 혹시 저장이 안 된 경우의 기본값(프로젝트에 맞게 조정) -->
+    set(control.usercontrol, all);
+        set(control.mouse, drag);
+        set(control.touch, drag);
+        set(control.wheel, on);
+      );
+    );
+  </action>
+</krpano>

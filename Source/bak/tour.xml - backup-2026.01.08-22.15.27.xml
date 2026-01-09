@@ -1,0 +1,2439 @@
+﻿<krpano version="1.23" title="2025 PBL">
+
+    <include url="skin/vtourskin.xml" />
+    <include url="add_hotspot/plugins_l/add_hotspot.xml" />
+
+<plugin name="soundinterface" keep="true" url="%FIRSTXML%/plugins/soundinterface.js" />
+
+
+ 
+<!--<include url="%VIEWER%/add_hotspot/plugins_l/editor/add_hotspot_2.xml"/> -->
+<!-- <include url="%VIEWER%/lockview.xml"/>  -->
+
+
+<!-- 글래스모피즘 스타일 -->
+  <style
+    name="style_glass_btn"
+    type="text"
+    css="font-family: 'Helvetica Neue', Arial, sans-serif; font-size:16px; font-weight:700; color:#000000; text-align:center; "
+    vcenter="true"
+    padding="0"
+    width="20%"
+    bg="true"
+    bgcolor="0xFFFFFF"
+    bgalpha="0.3"
+    bgborder="2 0xFFFFFF 0.5"
+    bgroundedge="50"
+    bgshadow="0"
+    distorted="true"
+    renderer="css3d"
+    scale="1.0"
+    tz="0"
+    onloaded="add_glass_effect();"
+    onover="tween(tz, 40, 0.25, easeOutBack); tween(scale, 1.1, 0.25, easeOutBack); glass_css_hover(true);"
+    onout="tween(tz, 0, 0.25, easeOutSine); tween(scale, 1.0, 0.25, easeOutSine); glass_css_hover(false);"
+  />
+
+  <action
+    name="add_glass_effect"
+    type="Javascript"
+  ><![CDATA[
+        var el = caller.sprite; 
+        
+        if(el) {
+            el.style.boxSizing = "border-box";
+
+            // CSS가 적용되면 XML의 bgalpha="0.3" 대신 이 스타일이 보입니다.
+            el.style.background = "rgba(255, 255, 255, 0.15)";
+            el.style.backdropFilter = "blur(12px)";
+            el.style.webkitBackdropFilter = "blur(12px)";
+            
+            // !important로 강제 적용하여 krpano XML 속성을 이깁니다.
+            el.style.setProperty("border-radius", "50px", "important");
+            el.style.setProperty("border", "2px solid rgba(255, 255, 255, 0.5)", "important");
+            
+            el.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.2)";
+            el.style.transition = "background 0.3s, border-color 0.3s, box-shadow 0.3s";
+            
+            el.style.display = "flex";
+            el.style.alignItems = "center";
+            el.style.justifyContent = "center";
+            el.style.overflow = "hidden"; 
+            
+            el.style.userSelect = "none";
+            el.style.cursor = "pointer";
+            el.style.transformStyle = "preserve-3d";
+        }
+    ]]></action>
+
+  <action
+    name="glass_css_hover"
+    type="Javascript"
+  ><![CDATA[
+        var el = caller.sprite;
+        var isHover = args[0]; 
+
+        if(el) {
+            if(isHover == true || isHover == "true") {
+                el.style.background = "rgba(255, 255, 255, 0.35)";
+                el.style.setProperty("border", "2px solid rgba(255, 255, 255, 1.0)", "important");
+                el.style.boxShadow = "0 20px 50px rgba(255, 255, 255, 0.4)";
+            } else {
+                el.style.background = "rgba(255, 255, 255, 0.15)";
+                el.style.setProperty("border", "2px solid rgba(255, 255, 255, 0.5)", "important");
+                el.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.2)";
+            }
+        }
+    ]]></action>
+ 
+<!--<include url="%VIEWER%/add_hotspot/plugins_l/editor/add_hotspot_2.xml"/> -->
+
+    <!-- customize skin settings: maps, gyro, webvr, thumbnails, tooltips, layout, design, ... -->
+    <skin_settings maps="true"
+                   maps_type="openstreetmaps"
+                   maps_bing_api_key=""
+                   maps_google_api_key=""
+                   maps_zoombuttons="false"
+                   maps_loadonfirstuse="true"
+                   gyro="true"
+                   gyro_keeplookingdirection="false"
+                   webvr="true"
+                   webvr_keeplookingdirection="true"
+                   webvr_prev_next_hotspots="true"
+                   autotour="false"
+                   littleplanetintro="false"
+                   followmousecontrol="false"
+                   title="true"
+                   thumbs="true"
+                   thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop="0|40|240|160"
+                   thumbs_opened="false"
+                   thumbs_text="true"
+                   thumbs_dragging="true"
+                   thumbs_onhoverscrolling="false"
+                   thumbs_scrollbuttons="false"
+                   thumbs_scrollindicator="false"
+                   thumbs_loop="false"
+                   tooltips_buttons="false"
+                   tooltips_thumbs="false"
+                   tooltips_hotspots="false"
+                   tooltips_mapspots="false"
+                   deeplinking="false"
+                   loadscene_flags="MERGE"
+                   loadscene_blend="OPENBLEND(0.5, 0.0, 0.75, 0.05, linear)"
+                   loadscene_blend_prev="SLIDEBLEND(0.5, 180, 0.75, linear)"
+                   loadscene_blend_next="SLIDEBLEND(0.5,   0, 0.75, linear)"
+                   loadingtext=""
+                   layout_width="100%"
+                   layout_maxwidth="814"
+                   controlbar_width="-24"
+                   controlbar_height="40"
+                   controlbar_offset="20"
+                   controlbar_offset_closed="-40"
+                   controlbar_overlap.no-fractionalscaling="10"
+                   controlbar_overlap.fractionalscaling="0"
+                   design_skin_images="vtourskin.png"
+                   design_bgcolor="0x2D3E50"
+                   design_bgalpha="0.8"
+                   design_bgborder="0"
+                   design_bgroundedge="1"
+                   design_bgshadow="0 4 10 0x000000 0.3"
+                   design_thumbborder_bgborder="3 0xFFFFFF 1.0"
+                   design_thumbborder_padding="2"
+                   design_thumbborder_bgroundedge="0"
+                   design_text_css="color:#FFFFFF; font-family:Arial;"
+                   design_text_shadow="1"
+                   />
+
+
+                   <plugin name="soundinterface"
+            url.flash="%VIEWER%/plugins/soundinterface.swf"
+            url.html5="%VIEWER%/plugins/soundinterface.js"
+            rootpath=""
+            preload="true"
+            keep="true"
+            />
+
+    
+    <layer name="snd" style="skin_glow" keep="true"  type="image" url="%VIEWER%/skin/sound_btn.png" align="left" x="180" y="0" alpha="1" scale="0.5" onover="tween(alpha,1);" onout="tween(alpha,1);" devices="html5"
+           crop="0|0|60|60"
+           onclick="pausesoundtoggle(bgsound); switch(crop, 0|0|60|60, 60|0|60|60);" parent="layer[skin_control_bar]"
+           />
+           
+    <events name="sound_events" keep="true"
+        onnewpano="set(layer[skin_btn_sound].crop, 0|0|60|60);"
+    /> 
+
+
+    <!-- startup action - load the first scene 
+    <action name="startup" autorun="onstart">
+        if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+        loadscene(get(startscene), null, MERGE);
+        if(startactions !== null, startactions() );
+            playsound(bgsound,  );
+    </action>   -->
+
+
+    
+
+    <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/sound_hs.xml"/>
+    <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/vid_hs.xml"/>
+
+    <!--
+        For an alternative skin design either change the <skin_settings> values 
+        from above or optionally include one of the predefined designs from below.
+
+
+    -->
+     
+    <!-- <include url="skin/vtourskin_design_flat_light.xml"  /> -->
+    <!-- <include url="skin/vtourskin_design_glass.xml"       /> -->
+    <!-- <include url="skin/vtourskin_design_ultra_light.xml" /> -->
+    <!-- <include url="skin/vtourskin_design_117.xml"         /> -->
+    <!-- <include url="skin/vtourskin_design_117round.xml"    /> -->
+    <!-- <include url="skin/vtourskin_design_black.xml"       />    <layer name="test" url="img/001.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_01_0001,null,MERGE,BLEND(2, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" vr="true"/>-->
+    <include url="skin/vtourskin_design_glass.xml"       /> 
+
+    
+        <!-- *** add hotspt *** -->
+
+    <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/vid_hs.xml"/>
+
+<scene name="scene_car" title="car" onstart="playsound(bgsnd, mp3/001.mp3, 0); show_dashboard_popup();" thumburl="panos/car.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+
+
+    <!--UI 컨테이너 레이어-->
+    <layer
+      name="dashboard_ui_layer"
+      type="container"
+      keep="true"
+      width="100%"
+      height="100%"
+      align="lefttop"
+      bgalpha="0"
+      zorder="10"
+      handcursor="false"
+      visible="false"
+      onloaded="setup_dashboard_ui();"
+    />
+
+    <action
+      name="show_dashboard_popup"
+      type="Javascript"
+    ><![CDATA[
+        
+        // 1. krpano 레이어 보이기
+        krpano.set("layer[dashboard_ui_layer].visible", true);
+        
+        // 2. 초기화 함수가 존재하는지 확인 후 실행 (안전장치)
+        if (typeof window.init_and_reset_ui === 'function') {
+            window.init_and_reset_ui();
+        }
+
+    ]]></action>
+
+    <!--HTML/CSS/JS-->
+    <action
+      name="setup_dashboard_ui"
+      type="Javascript"
+    ><![CDATA[
+        
+        var layer = caller.sprite;
+        
+        // ---------------------------------------------------------
+        // 1. CSS 스타일 정의
+        // ---------------------------------------------------------
+        var cssStyles = `
+            :root {
+                --color1-rgb: 30, 30, 30;
+                --color2-rgb: 255, 255, 255;
+                --color3-rgb: 255, 255, 255;
+                --fade-out-duration: 0.4s;
+            }
+            [data-theme="darkmode"] { --color1-rgb: 30, 30, 30; --color2-rgb: 100, 100, 100; --color3-rgb: 200, 200, 200; }
+            [data-theme="blue"] { --color1-rgb: 200, 200, 255; --color2-rgb: 0, 0, 128; --color3-rgb: 0, 0, 10; }
+        
+            .ui-wrapper {
+                width: 100%; height: 100%;
+                display: flex; justify-content: center; align-items: center;
+                font-family: 'Helvetica Neue', Arial, sans-serif;
+                pointer-events: none;
+            }
+
+            .dashboard-container, .control-bar, .global-backdrop { pointer-events: auto; }
+
+            .global-backdrop {
+                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+                z-index: 2; transition: opacity var(--fade-out-duration) ease-out; opacity: 1;
+            }
+
+            .dashboard-container {
+                position: relative; 
+                width: 950px; height: 600px;
+                display: flex; flex-direction: row;
+                background: rgba(var(--color3-rgb), 0.3);
+                border: 1px solid rgba(var(--color1-rgb), 0.1);
+                border-radius: 40px;
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+                z-index: 5; overflow: hidden;
+                transition: opacity var(--fade-out-duration) ease-out; opacity: 1;
+            }
+
+            .dashboard-bg {
+                position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                background-size: cover; background-position: center; background-repeat: no-repeat;
+                transition: none; z-index: 0;
+            }
+
+            .content-area {
+                position: relative; z-index: 1; flex: 1; padding: 30px 40px;
+                display: flex; flex-direction: column; justify-content: flex-start; overflow-y: auto;
+            }
+            .content-area::-webkit-scrollbar, .character-container::-webkit-scrollbar { display: none; }
+
+            .content-header { text-align: center; }
+            .content-header h3 { margin: 20px 0 0 0; font-size: 24px; font-weight: 600; color: rgba(255,155,40,1); }
+            .content-header p { margin: 0 0 30px 0; font-size: 14px; color: rgba(var(--color1-rgb), 0.6); }
+
+            .character-container, .gender-container {
+                display: flex; gap: 40px; align-items: center; justify-content: center;
+                padding: 40px 40px 110px 40px; width: 100%; flex: 1;
+                overflow-x: visible; box-sizing: border-box;
+            }
+
+            .character-card, .gender-card {
+                width: 260px; height: 260px;
+                background: rgba(var(--color2-rgb), 0.25);
+                border: 1px solid rgba(var(--color1-rgb), 0.4);
+                border-radius: 30px; display: flex; flex-direction: column;
+                overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                position: relative; box-sizing: border-box; flex-shrink: 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            .character-card:hover, .gender-card:hover {
+                transform: translateY(-5px) scale(1.05); opacity: 1;
+                background: rgba(var(--color2-rgb), 0.25);
+                border: 1px solid rgba(var(--color1-rgb), 0.5);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+            .character-card.selected, .gender-card.selected {
+                transform: translateY(-10px) scale(1.1) !important;
+                border: 4px solid #ff7052;
+                box-shadow: 0 0 40px rgba(255, 112, 82, 0.6), 0 20px 40px rgba(0, 0, 0, 0.4);
+                z-index: 20;
+            }
+
+            .card-image-placeholder {
+                flex: 1; width: 100%; display: flex; justify-content: center; align-items: flex-end;
+                padding-bottom: 20px; font-size: 50px; color: rgba(var(--color1-rgb), 0.8);
+            }
+            .card-info {
+                height: auto; width: 100%; padding: 0 0 40px 0;
+                display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+            }
+            .card-info h4 { margin: 0; color: rgba(0, 0, 0, 1); font-size: 24px; font-weight: 800; line-height: 1.2; }
+            .card-info p { margin: 5px 0 0 0; color: #5c5c5c; font-size: 16px; font-weight: 400; }
+
+            .select-button {
+                width: 140px; height: 50px; display: flex; justify-content: center; align-items: center;
+                font-size: 16px; font-weight: 500; color: rgba(var(--color1-rgb), 1); letter-spacing: 0.5px;
+                background: rgba(245,245,245, 0.3); border: 1px solid rgba(var(--color1-rgb), 0.5);
+                border-radius: 100px; cursor: pointer; user-select: none; transition: all 0.3s ease;
+                backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            }
+            .select-button:hover {
+                background: rgba(245,245,245, 0.6); border-color: rgba(var(--color1-rgb), 0.6);
+                transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+            .select-button.selected { 
+                background: rgba(var(--color1-rgb), 1); color: #fff;
+                border: 1px solid rgba(var(--color1-rgb), 1); box-shadow: 0 0 20px rgba(var(--color1-rgb), 0.4);
+                transform: translateY(-5px) scale(1.05); font-weight: bold;
+            }
+            .select-button:active { transform: scale(0.95); }
+            
+            .start-button { width: 120px; background: rgba(245,245,245, 0.3); }
+            .start-button.disabled { background: rgba(var(--color1-rgb), 0.2) !important; color: rgba(var(--color1-rgb), 0.4) !important; cursor: not-allowed; }
+
+            .control-bar {
+                position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+                display: flex; gap: 25px; padding: 12px 30px;
+                background: rgba(var(--color2-rgb), 0.15); border: 1px solid rgba(var(--color1-rgb), 0.2);
+                border-radius: 50px; box-shadow: 0 8px 32px 0 rgba(var(--color3-rgb), 0.3);
+                backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 10;
+            }
+            .icon-btn {
+                color: rgba(var(--color1-rgb), 0.8); font-size: 24px; cursor: pointer; transition: all 0.3s ease;
+                user-select: none; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px;
+            }
+            .icon-btn:hover { color: rgba(var(--color1-rgb), 1); text-shadow: 0 0 10px rgba(var(--color1-rgb), 0.6); transform: scale(1.2); }
+            .icon-btn:active { transform: scale(0.95); }
+
+            .progress-bar-container { display: flex; align-items: flex-start; justify-content: center; margin-bottom: 40px; height: 40px; }
+            .step-item { display: flex; flex-direction: column; align-items: center; position: relative; width: 40px; }
+            .step-circle {
+                width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(var(--color1-rgb), 0.3);
+                background: transparent; margin-bottom: 8px; position: relative; z-index: 2; transition: all 0.3s;
+            }
+            .step-text { font-size: 11px; color: rgba(var(--color1-rgb), 0.4); font-weight: 500; white-space: nowrap; position: absolute; top: 22px; }
+            
+            .step-item.active .step-circle { border-color: rgba(var(--color1-rgb), 1); background: transparent; }
+            .step-item.active .step-circle::after {
+                content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                width: 6px; height: 6px; border-radius: 50%; background: rgba(var(--color1-rgb), 1);
+            }
+            .step-item.active .step-text { color: rgba(var(--color1-rgb), 1); font-weight: 800; }
+            
+            .step-item.completed .step-circle { background: rgba(var(--color1-rgb), 0.6); border-color: rgba(var(--color1-rgb), 0.6); }
+            .step-item.completed .step-text { color: rgba(var(--color1-rgb), 0.6); }
+
+            .step-line { width: 80px; height: 1px; background: rgba(var(--color1-rgb), 0.2); margin: 0 5px; margin-top: 7px; }
+        `;
+
+        var styleElem = document.createElement("style");
+        styleElem.innerHTML = cssStyles;
+        document.head.appendChild(styleElem);
+
+
+        // ---------------------------------------------------------
+        // 2. HTML 구조 정의 (수정됨)
+        // ---------------------------------------------------------
+        var htmlContent = `
+        <div class="ui-wrapper">
+            <div id="global_backdrop" class="global-backdrop"></div>
+
+            <div id="dashboard_panel" class="dashboard-container">
+                <div id="dashboard_bg" class="dashboard-bg"></div>
+
+                <div class="content-area">
+                    <div id="selection_view" style="display: flex; height: 100%; flex-direction: column; align-items: center; position: relative">
+                        <div class="content-header" style="margin-bottom: 30px">
+                            <div class="progress-bar-container" id="selection_progress_bar"></div>
+                            <h3 id="selection_title">Title Here</h3>
+                        </div>
+
+                        <div id="selection_card_container" class="gender-container" style="overflow-x: visible; padding: 40px 40px 110px 40px"></div>
+
+                        <div style="position: absolute; bottom: 0; margin-bottom: 10px; display: flex; gap: 20px; justify-content: center; width: 100%;">
+                            <div id="btn_back" class="select-button" onclick="window.handleBack()" ontouchend="window.handleBack()" >이전</div>
+                            <div id="btn_next" class="select-button start-button disabled" onclick="window.handleNext()" ontouchend="window.handleNext()">다음</div>
+                        </div>
+                    </div>
+
+                    <div id="profile_view" style="display: none; height: 100%; flex-direction: column; position: relative; align-items: center">
+                        <div class="content-header" style="margin-bottom: 30px">
+                            <div class="progress-bar-container" id="profile_progress_bar"></div>
+                            <h3 id="title_profile">파트너 프로필</h3>
+                        </div>
+
+                        <div class="profile-content" style="flex: 1; display: flex; justify-content: center; align-items: center; width: 100%">
+                            </div>
+
+                        <div style="position: absolute; bottom: 0; margin-bottom: 10px; display: flex; gap: 20px; justify-content: center; width: 100%;">
+                            <div class="select-button" onclick="window.showSelectionStep(4)" ontouchend="window.showSelectionStep(4)">이전</div>
+                            <div class="select-button start-button" onclick="window.startRealTour()" ontouchend="window.startRealTour()">시작</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--
+            <div class="control-bar">
+                <div class="icon-btn" title="Previous Scene" onclick="window.ui_trace('Load Previous Scene')" ontouchend="window.ui_trace('Load Previous Scene')">◀</div>
+                <div class="icon-btn" title="Zoom In" onclick="window.ui_trace('Zoom In')" ontouchend="window.ui_trace('Zoom In')">⊕</div>
+                <div class="icon-btn" title="Zoom Out" onclick="window.ui_trace('Zoom Out')" ontouchend="window.ui_trace('Zoom Out')">⊖</div>
+                <div class="icon-btn" title="Next Scene" onclick="window.ui_trace('Load Next Scene')" ontouchend="window.ui_trace('Load Next Scene')">▶</div>
+                <div class="icon-btn" title="Fullscreen" onclick="window.ui_trace('Toggle Fullscreen')" ontouchend="window.ui_trace('Toggle Fullscreen')">⛶</div>
+            </div>
+            -->
+        </div>
+        `;
+
+        layer.innerHTML = htmlContent;
+
+
+        // ---------------------------------------------------------
+        // 3. 로직 처리 (JS)
+        // ---------------------------------------------------------
+        var selectedCharacter = null;
+        var userGender = null;
+        var currentStep = 1;
+        
+        // Constants
+        var STEP_START = 1;
+        var STEP_INTRO_VIDEO = 2;
+        var STEP_GENDER = 3;
+        var STEP_PARTNER = 4;
+        var STEP_PROFILE = 5;
+        var FADE_DURATION_MS = 400;
+
+        window.init_and_reset_ui = function() {
+            
+            selectedCharacter = null;
+            userGender = null;
+            currentStep = STEP_START;
+
+            var panel = document.getElementById('dashboard_panel');
+            var backdrop = document.getElementById('global_backdrop');
+            
+            if(panel) {
+                panel.style.display = 'flex';
+                panel.style.opacity = '1';
+                panel.style.background = "rgba(42, 42, 42, 0.6)";
+                panel.style.border = "1px solid rgba(255, 255, 255, 0.1)";
+            }
+            if(backdrop) {
+                backdrop.style.display = 'block';
+                backdrop.style.opacity = '1';
+            }
+
+            window.showSelectionStep(STEP_START);
+        };
+
+        window.ui_trace = function(msg) {
+            krpano.trace(0, "[Dashboard UI] " + msg);
+            if(msg === 'Zoom In') krpano.call("adjusthlookat(0); moveto(get(view.hlookat), get(view.vlookat), calc(view.fov - 10));");
+            if(msg === 'Zoom Out') krpano.call("adjusthlookat(0); moveto(get(view.hlookat), get(view.vlookat), calc(view.fov + 10));");
+            if(msg === 'Toggle Fullscreen') krpano.call("switch(fullscreen);");
+        };
+
+        // [수정된 함수] 프로그래스 바 로직과 뷰 전환 로직 순서 변경
+        window.showSelectionStep = function(step) {
+            currentStep = step;
+            
+            // 1. 프로그래스 바 HTML 생성 (뷰 전환 전에 먼저 계산)
+            var barHTML = "";
+            var barContainerSelection = document.getElementById("selection_progress_bar");
+            var barContainerProfile = document.getElementById("profile_progress_bar"); // [추가] Profile쪽 컨테이너
+            var panel = document.getElementById("dashboard_panel");
+
+            // 스타일 및 표시 여부 결정
+            if (step < STEP_GENDER) {
+                // Intro 단계
+                if(barContainerSelection) barContainerSelection.style.display = "none";
+                if(panel) {
+                    panel.style.background = "rgba(42, 42, 42, 0.6)";
+                    panel.style.border = "1px solid rgba(255, 255, 255, 0.1)";
+                }
+            } else {
+                // 선택 단계 & 프로필 단계
+                if(barContainerSelection) barContainerSelection.style.display = "flex";
+                if(panel) {
+                    panel.style.background = ""; // Glass Default
+                    panel.style.border = "";
+                }
+
+                // 클래스 계산
+                var isGenderDone = step > STEP_GENDER;
+                var isPartnerDone = step > STEP_PARTNER;
+                
+                var classGender = isGenderDone ? "completed" : (step === STEP_GENDER ? "active" : "");
+                var classPartner = isPartnerDone ? "completed" : (step === STEP_PARTNER ? "active" : "");
+                var classProfile = step === STEP_PROFILE ? "active" : "";
+
+                var line1Style = step >= STEP_PARTNER ? "0.6" : "0.2";
+                var line2Style = step >= STEP_PROFILE ? "0.6" : "0.2";
+
+                barHTML = `
+                    <div class="step-item ${classGender}">
+                        <div class="step-circle"></div><div class="step-text">성별 설정</div>
+                    </div>
+                    <div class="step-line" style="background: rgba(var(--color1-rgb), ${line1Style})"></div>
+                    
+                    <div class="step-item ${classPartner}">
+                        <div class="step-circle"></div><div class="step-text">파트너 설정</div>
+                    </div>
+                    <div class="step-line" style="background: rgba(var(--color1-rgb), ${line2Style})"></div>
+                    
+                    <div class="step-item ${classProfile}">
+                        <div class="step-circle"></div><div class="step-text">프로필 확인</div>
+                    </div>
+                `;
+            }
+
+            // 2. 뷰 전환 및 HTML 주입
+            var view = document.getElementById("selection_view");
+            var profileView = document.getElementById("profile_view");
+
+            if (step === STEP_PROFILE) {
+                // 프로필 뷰 활성화
+                view.style.display = "none";
+                profileView.style.display = "flex";
+                
+                // [중요] 프로필 뷰의 진행 바 컨테이너에 HTML 주입
+                if(barContainerProfile) barContainerProfile.innerHTML = barHTML;
+                
+                showProfileView();
+                return; // 여기서 종료 (아래 로직은 Selection 뷰용)
+            } else {
+                // 일반 뷰 활성화
+                view.style.display = "flex";
+                profileView.style.display = "none";
+                
+                // 일반 뷰의 진행 바 컨테이너에 HTML 주입
+                if(barContainerSelection) barContainerSelection.innerHTML = barHTML;
+            }
+
+            // 3. Selection View 내부 콘텐츠 렌더링 (Step 1~4)
+            var titleEl = document.getElementById("selection_title");
+            var headerEl = titleEl ? titleEl.parentElement : document.querySelector("#selection_view .content-header");
+            var container = document.getElementById("selection_card_container");
+            var backBtn = document.getElementById("btn_back");
+            var nextBtn = document.getElementById("btn_next");
+
+            container.innerHTML = ""; // 초기화
+
+            if (step === STEP_START) {
+                if (headerEl) headerEl.style.display = "none";
+                backBtn.style.display = "none";
+                nextBtn.classList.remove("disabled");
+                nextBtn.innerText = "START";
+                container.innerHTML = `<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;"><img src="Img/logo.png" style="max-width: 720px; max-height: 420px; object-fit: contain;" /></div>`;
+                updateDashboardBg("");
+
+            } else if (step === STEP_INTRO_VIDEO) {
+                if (headerEl) headerEl.style.display = "block";
+                titleEl.innerText = "";
+                backBtn.style.display = "flex";
+                nextBtn.classList.remove("disabled");
+                nextBtn.innerText = "다음";
+                container.innerHTML = ""; 
+                updateDashboardBg("");
+
+            } else if (step === STEP_GENDER) {
+                titleEl.innerText = "당신의 성별을 무엇인가요?";
+                backBtn.style.display = "flex";
+                nextBtn.innerText = "다음";
+                if (userGender) nextBtn.classList.remove("disabled");
+                else nextBtn.classList.add("disabled");
+                updateDashboardBg("Img/bg1.jpg");
+
+                var genders = [{ id: "M", label: "남성", sub: "(Male)", img: "Img/IconM.png" }, { id: "F", label: "여성", sub: "(Female)", img: "Img/IconF.png" }];
+                genders.forEach(function(g) {
+                    var card = document.createElement("div");
+                    card.className = "gender-card";
+                    if (userGender === g.id) card.classList.add("selected");
+                    card.onclick = function() { window.selectGender(g.id, card); };
+                    card.ontouchend = function() { window.selectGender(g.id, card); };
+                    card.innerHTML = `<div class="card-image-placeholder"><img src="${g.img}" style="height: 80px; width: auto; object-fit: contain;" /></div><div class="card-info"><h4>${g.label}</h4><p>${g.sub}</p></div>`;
+                    container.appendChild(card);
+                    card.style.pointerEvents = 'auto'; // krpano의 터치 방해를 뚫음
+                    card.style.cursor = 'pointer';
+                    card.style.zIndex = '1000';
+                });
+
+                
+
+            } else if (step === STEP_PARTNER) {
+                titleEl.innerText = "당신의 데이트 상대를 골라주세요.";
+                backBtn.style.display = "flex";
+                if (selectedCharacter) nextBtn.classList.remove("disabled");
+                else nextBtn.classList.add("disabled");
+                if (userGender === "M") updateDashboardBg("Img/bg2.jpg");
+                else updateDashboardBg("Img/bg3.jpg");
+                renderPartnerCards(container);
+            }
+        };
+
+        window.selectGender = function(gender, cardEl) {
+            if (userGender === gender) {
+                userGender = null;
+                cardEl.classList.remove("selected");
+                document.getElementById("btn_next").classList.add("disabled");
+            } else {
+                userGender = gender;
+                document.querySelectorAll(".gender-card").forEach(function(el){ el.classList.remove("selected"); });
+                cardEl.classList.add("selected");
+                document.getElementById("btn_next").classList.remove("disabled");
+            }
+        };
+
+        function updateDashboardBg(imageUrl) {
+            var bgInfo = document.getElementById("dashboard_bg");
+            if (bgInfo) {
+                bgInfo.style.backgroundImage = imageUrl ? "url('" + imageUrl + "')" : "none";
+            }
+        }
+
+        function renderPartnerCards(container) {
+            var allChars = [{ id: "TETO_M", type: "Testosterone", name: "테토남" }, { id: "TETO_F", type: "Testosterone", name: "테토녀" }, { id: "EGEN_M", type: "Estrogen", name: "에겐남" }, { id: "EGEN_F", type: "Estrogen", name: "에겐녀" }];
+            var targetSuffix = (userGender === "M") ? "_F" : "_M";
+            var filtered = allChars.filter(function(char) { return char.id.endsWith(targetSuffix); });
+
+            filtered.forEach(function(char) {
+                var card = document.createElement("div");
+                card.className = "character-card";
+                if (selectedCharacter && selectedCharacter.id === char.id) card.classList.add("selected");
+                card.onclick = function() { window.selectPartner(char, card); };
+                card.ontouchend = function() { window.selectPartner(char, card); };
+                var iconImg = (char.type === "Estrogen") ? "Img/IconEG.png" : "Img/IconTT.png";
+                card.innerHTML = `<div class="card-image-placeholder"><img src="${iconImg}" style="height: 100px; width: auto; object-fit: contain;" /></div><div class="card-info"><h4>${char.name}</h4><p>(${char.type})</p></div>`;
+                container.appendChild(card);
+            });
+        }
+
+        window.selectPartner = function(charObj, cardEl) {
+            if (selectedCharacter && selectedCharacter.id === charObj.id) {
+                selectedCharacter = null;
+                cardEl.classList.remove("selected");
+                document.getElementById("btn_next").classList.add("disabled");
+            } else {
+                selectedCharacter = charObj;
+                document.querySelectorAll(".character-card").forEach(function(el){ el.classList.remove("selected"); });
+                cardEl.classList.add("selected");
+                document.getElementById("btn_next").classList.remove("disabled");
+            }
+        };
+
+        function showProfileView() {
+            document.getElementById("title_profile").innerText = ""; 
+            var bgMap = { TETO_M: "Img/bg4.jpg", TETO_F: "Img/bg5.jpg", EGEN_M: "Img/bg6.jpg", EGEN_F: "Img/bg7.jpg" };
+            if (selectedCharacter && bgMap[selectedCharacter.id]) {
+                updateDashboardBg(bgMap[selectedCharacter.id]);
+            }
+        }
+
+        // [수정된 함수] 캐릭터별 씬 이동 로직 추가
+        window.startRealTour = function() {
+            
+            // 1. 캐릭터 ID와 이동할 씬 이름 매핑 (★본인의 씬 이름으로 수정 필요★)
+            var sceneMapping = {
+                'TETO_M': 'scene_TMLobby',    // 테토남 선택 시 이동할 씬 이름
+                'TETO_F': 'scene_TFLobby',  // 테토녀 선택 시 이동할 씬 이름
+                'EGEN_M': 'scene_EMLobby',    // 에겐남 선택 시 이동할 씬 이름
+                'EGEN_F': 'scene_EFLobby'   // 에겐녀 선택 시 이동할 씬 이름
+            };
+
+            // 2. 선택된 캐릭터에 맞는 씬 이름 가져오기
+            var targetScene = sceneMapping[selectedCharacter.id];
+
+            // 3. krpano 로그 출력 및 씬 로드
+            if (targetScene) {
+                krpano.call("trace('Load Scene: " + targetScene + " (Character: " + selectedCharacter.name + ")');");
+                
+                // 씬 로드 (loadscene(씬이름, null, MERGE, 블렌드효과))
+                krpano.call("loadscene(" + targetScene + ", null, MERGE, BLEND(1.0, easeInCubic));");
+            } else {
+                krpano.call("trace('Error: 씬 이름이 매핑되지 않았습니다. ID: " + selectedCharacter.id + "');");
+                // 테스트용: 매핑된 씬이 없으면 기본 씬으로 이동하려면 아래 주석 해제
+                // krpano.call("loadscene(scene_default, null, MERGE, BLEND(1.0));");
+            }
+            
+            // 4. UI 페이드 아웃 및 제거 (기존 로직 유지)
+            var panel = document.getElementById("dashboard_panel");
+            var backdrop = document.getElementById("global_backdrop");
+
+            if (panel) panel.style.opacity = "0";
+            if (backdrop) backdrop.style.opacity = "0";
+
+            setTimeout(function() {
+                if (panel) panel.style.display = "none";
+                if (backdrop) backdrop.style.display = "none";
+            }, FADE_DURATION_MS);
+        };
+
+        window.handleBack = function() {
+            if (currentStep > 1) showSelectionStep(currentStep - 1);
+        };
+        window.handleNext = function() {
+            if (currentStep === STEP_START) showSelectionStep(STEP_INTRO_VIDEO);
+            else if (currentStep === STEP_INTRO_VIDEO) showSelectionStep(STEP_GENDER);
+            else if (currentStep === STEP_GENDER && userGender) showSelectionStep(STEP_PARTNER);
+            else if (currentStep === STEP_PARTNER && selectedCharacter) showSelectionStep(STEP_PROFILE);
+        };
+
+        // 초기 실행
+        showSelectionStep(1);
+
+    ]]></action>
+ 
+
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="3.642" vlookat="6.215" fovtype="MFOV" fov="126.033" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/car.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/car.tiles/pano_%s.jpg" />
+        </image>
+
+    </scene>
+
+
+    <scene
+    name="scene_TMLobby"
+    title="TMLobby"
+    thumburl="panos/main.tiles/thumb.jpg"
+    lat="-0.00000000"
+    lng="-0.00000000"
+    alt="0.00"
+    heading="0.0"
+    lockview="true"
+  >
+    <control bouncinglimits="calc:image.cube ? true : false" />
+    <hotspot name="charTM" ready="true" scale="0.13" ath="30" atv="15.5" rx="22" ry="1" rz="-2.5" distorted="true" capturewheel="false" url="%FIRSTXML%/add_hotspot/picture/charTM.png" install_onclick="5" colorize="16777215" brightness="1" contrast="1" saturate="1" hue="0" invert="0" sepia="0" />
+
+    <hotspot
+      name="btn_1"
+      style="style_glass_btn"
+      html="청계사"
+      ath="-28"
+      atv="-14"
+      rx="-14"
+      height="20%"
+      onclick="trace('clicked'); loadscene(scene_01_0001_m,null,MERGE,BLEND(0.5));"
+
+      background="true"
+      backgroundimage="img/청계사.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_2"
+      style="style_glass_btn"
+      html="의왕스카이레일"
+      ath="0"
+      atv="-14"
+      rx="-14"
+      height="20%"
+      onclick="trace('clicked'); loadscene(scene_03_001_m,null,MERGE,BLEND(0.5));"
+
+      background="true"
+      backgroundimage="img/의왕스카이레일.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_3"
+      style="style_glass_btn"
+      html="의왕레일바이크"
+      ath="-28"
+      atv="14"
+      rx="14"
+      height="20%"
+      onclick="trace('clicked'); loadscene(scene_07_001_m,null,MERGE,BLEND(0.5));"
+
+      background="true"
+      backgroundimage="img/의왕레일바이크.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_4"
+      style="style_glass_btn"
+      html="마당기픈집"
+      ath="0"
+      atv="14"
+      rx="14"
+      height="20%"
+      onclick="trace('clicked'); loadscene(scene_04_001_m,null,MERGE,BLEND(0.5));"
+
+      background="true"
+      backgroundimage="img/마당기픈집.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_5"
+      style="style_glass_btn"
+      html="투어 끝내기"
+      ath="28"
+      atv="-18.5"
+      rx="-14"
+      height="10%"
+      onclick="trace('clicked'); loadscene(scene_black,null,MERGE,BLEND(0.5));"
+    />
+  </scene>
+
+  <scene
+    name="scene_TFLobby"
+    title="TFLobby"
+    thumburl="panos/main.tiles/thumb.jpg"
+    lat="-0.00000000"
+    lng="-0.00000000"
+    alt="0.00"
+    heading="0.0"
+    lockview="true"
+  >
+
+    <control bouncinglimits="calc:image.cube ? true : false" />
+
+    <view
+      hlookat="3.642"
+      vlookat="6.215"
+      fovtype="MFOV"
+      fov="126.033"
+      maxpixelzoom="2.0"
+      fovmin="70"
+      fovmax="140"
+      limitview="auto"
+    />
+
+    <preview url="panos/main.tiles/preview.jpg" />
+
+    <image>
+      <cube url="panos/main.tiles/pano_%s.jpg" />
+    </image>
+
+    <hotspot name="charTF" ready="true" scale="0.13" ath="30" atv="13.5" rx="22" ry="1" rz="-2.5" distorted="true" capturewheel="false" url="%FIRSTXML%/add_hotspot/picture/charTF.png" install_onclick="5" colorize="16777215" brightness="1" contrast="1" saturate="1" hue="0" invert="0" sepia="0" />
+
+    <hotspot name="btn_1" style="style_glass_btn" ath="-28" atv="-14" height="20%" bgcolor="0xffffff" rotationorder="YXZ" rx="-14" text="청계사" textalign="left" padding="10" bordercolor="0x000000" onclick="trace('clicked'); loadscene(scene_01_0001_m,null,MERGE,BLEND(0.5));" backgroundimage="img/청계사.png" backgroundsize="cover" />
+
+    <hotspot name="btn_2" style="style_glass_btn" atv="-14" height="20%" bgcolor="0xffffff" rotationorder="YXZ" rx="-14" text="의왕스카이레일" textalign="left" padding="10" bordercolor="0x000000" onclick="trace('clicked'); loadscene(scene_03_001_m,null,MERGE,BLEND(0.5));" backgroundimage="img/의왕스카이레일.png" backgroundsize="cover" />
+
+    <hotspot name="btn_3" style="style_glass_btn" ath="-28" atv="14" height="20%" bgcolor="0xffffff" rotationorder="YXZ" rx="14" text="의왕레일바이크" textalign="left" padding="10" bordercolor="0x000000" onclick="trace('clicked'); loadscene(scene_07_001_m,null,MERGE,BLEND(0.5));" backgroundimage="img/의왕레일바이크.png" backgroundsize="cover" />
+
+    <hotspot name="btn_4" style="style_glass_btn" atv="14" height="20%" bgcolor="0xffffff" rotationorder="YXZ" rx="14" text="마당기픈집" textalign="left" padding="10" bordercolor="0x000000" onclick="trace('clicked'); loadscene(scene_04_001_m,null,MERGE,BLEND(0.5));" backgroundimage="img/마당기픈집.png" backgroundsize="cover" />
+
+    <hotspot name="btn_5" style="style_glass_btn" ath="28" atv="-18.5" height="10%" bgcolor="0xffffff" rotationorder="YXZ" rx="-14" text="투어 끝내기" textalign="left" bordercolor="0x000000" onclick="trace('clicked'); loadscene(scene_black,null,MERGE,BLEND(0.5));" />
+  </scene>
+
+  <scene
+    name="scene_EMLobby"
+    title="EMLobby"
+    thumburl="panos/main.tiles/thumb.jpg"
+    lat="-0.00000000"
+    lng="-0.00000000"
+    alt="0.00"
+    heading="0.0"
+    lockview="true"
+  >
+    <control bouncinglimits="calc:image.cube ? true : false" />
+
+    <view
+      hlookat="3.642"
+      vlookat="6.215"
+      fovtype="MFOV"
+      fov="126.033"
+      maxpixelzoom="2.0"
+      fovmin="70"
+      fovmax="140"
+      limitview="auto"
+    />
+
+    <preview url="panos/main.tiles/preview.jpg" />
+
+    <image>
+      <cube url="panos/main.tiles/pano_%s.jpg" />
+    </image>
+
+    <hotspot name="charEM" ready="true" scale="0.13" ath="30" atv="15" rx="22" ry="1" rz="-2.5" distorted="true" capturewheel="false" url="%FIRSTXML%/add_hotspot/picture/charEM.png" install_onclick="5" colorize="16777215" brightness="1" contrast="1" saturate="1" hue="0" invert="0" sepia="0" />
+
+    <hotspot
+      name="btn_1"
+      style="style_glass_btn"
+      html="하우현성당"
+      ath="-28"
+      atv="-14"
+      rx="-14"
+      height="20%"
+      onclick="trace('clicked') ; loadscene(scene_02_0001_m,null,MERGE,BLEND(0.5));"
+    
+      background="true"
+      backgroundimage="img/하우현성당.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_2"
+      style="style_glass_btn"
+      html="자연생태공원"
+      ath="0"
+      atv="-14"
+      rx="-14"
+      height="20%"
+      onclick="trace('clicked'); loadscene(scene_08_002_m,null,MERGE,BLEND(0.5));"
+    
+      background="true"
+      backgroundimage="img/자연생태공원.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_3"
+      style="style_glass_btn"
+      html="가나안덕"
+      ath="-28"
+      atv="14"
+      rx="14"
+      height="20%"
+      onclick="trace('clicked'); loadscene(scene_06_001_m,null,MERGE,BLEND(0.5));"
+    
+      background="true"
+      backgroundimage="img/가나안덕.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_4"
+      style="style_glass_btn"
+      html="네이처티파니"
+      ath="0"
+      atv="14"
+      rx="14"
+      height="20%"
+      onclick="trace('clicked'); loadscene(scene_05_001_m,null,MERGE,BLEND(0.5));"
+    
+      background="true"
+      backgroundimage="img/네이처티파니.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_5"
+      style="style_glass_btn"
+      html="투어 끝내기"
+      ath="28"
+      atv="-18.5"
+      rx="-14"
+      height="10%"
+      onclick="trace('clicked'); loadscene(scene_black,null,MERGE,BLEND(0.5));"
+    />
+  </scene>
+
+  <scene
+    name="scene_EFLobby"
+    title="EFLobby"
+    thumburl="panos/main.tiles/thumb.jpg"
+    lat="-0.00000000"
+    lng="-0.00000000"
+    alt="0.00"
+    heading="0.0"
+    lockview="true"
+  >
+    <control bouncinglimits="calc:image.cube ? true : false" />
+
+    <view
+      hlookat="3.642"
+      vlookat="6.215"
+      fovtype="MFOV"
+      fov="126.033"
+      maxpixelzoom="2.0"
+      fovmin="70"
+      fovmax="140"
+      limitview="auto"
+    />
+
+    <preview url="panos/main.tiles/preview.jpg" />
+
+    <image>
+      <cube url="panos/main.tiles/pano_%s.jpg" />
+    </image>
+
+    <hotspot name="charEF" ready="true" scale="0.13" ath="32.5" atv="16.5" rx="22" ry="1" rz="-2.5" distorted="true" capturewheel="false" url="%FIRSTXML%/add_hotspot/picture/charEF.png" install_onclick="5" colorize="16777215" brightness="1" contrast="1" saturate="1" hue="0" invert="0" sepia="0" />
+
+    <hotspot
+      name="btn_1"
+      style="style_glass_btn"
+      html="하우현성당"
+      ath="-28"
+      atv="-14"
+      rx="-14"
+      height="20%"
+      onclick="trace('clicked') ; loadscene(scene_02_0001_m,null,MERGE,BLEND(0.5));"
+    
+      background="true"
+      backgroundimage="img/하우현성당.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_2"
+      style="style_glass_btn"
+      html="자연생태공원"
+      ath="0"
+      atv="-14"
+      rx="-14"
+      height="20%"
+      onclick="trace('clicked'); loadscene(scene_08_002_m,null,MERGE,BLEND(0.5));"
+    
+      background="true"
+      backgroundimage="img/자연생태공원.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_3"
+      style="style_glass_btn"
+      html="가나안덕"
+      ath="-28"
+      atv="14"
+      rx="14"
+      height="20%"
+      onclick="trace('clicked'); loadscene(scene_06_001_m,null,MERGE,BLEND(0.5));"
+    
+      background="true"
+      backgroundimage="img/가나안덕.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_4"
+      style="style_glass_btn"
+      html="네이처티파니"
+      ath="0"
+      atv="14"
+      rx="14"
+      height="20%"
+      onclick="trace('clicked'); loadscene(scene_05_001_m,null,MERGE,BLEND(0.5));"
+    
+      background="true"
+      backgroundimage="img/네이처티파니.png"
+      vcenter="true"
+      padding="10"
+      backgroundsize="cover"
+    />
+
+    <hotspot
+      name="btn_5"
+      style="style_glass_btn"
+      html="투어 끝내기"
+      ath="28"
+      atv="-18.5"
+      rx="-14"
+      height="10%"
+      onclick="trace('clicked'); loadscene(scene_black,null,MERGE,BLEND(0.5));"
+    />
+  </scene>
+
+
+
+    <scene name="scene_black" title="black" onstart="" thumburl="panos/black.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" hlookatmin="-20"
+ fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+
+
+        <preview url="panos/black.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/black.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="hsp_1_1" style="vid_hs_addhs" scalez="3.412" oy="20.60" scale="3.412" videourl="%FIRSTXML%/add_hotspot/video/end2.mp4" info_ah="end2.mp4" play_vh="true"  enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+
+    </scene>
+
+
+
+    
+    <scene name="scene_main" title="main" onstart="" thumburl="panos/main.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/main.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/main.tiles/pano_%s.jpg" />
+        </image>
+
+    
+        <hotspot name="hsp_1_2" style="vid_hs_addhs" scalez="3.412" oy="20.60" scale="3.412" videourl="%FIRSTXML%/add_hotspot/video/end3.mp4" info_ah="end3.mp4" play_vh="true"  enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+    </scene>
+
+
+
+    
+    <scene name="scene_main2" title="main2" onstart="" thumburl="panos/main2.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="5" vlookat="-5" fovtype="MFOV" fov="100" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/main2.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/main2.tiles/pano_%s.jpg" />
+        </image>
+
+    
+        <hotspot name="hsp_7_1" style="addhs" url="%FIRSTXML%/add_hotspot/picture/charTF.png" ath="0.6583" atv="-1.4856" distorted="true" scale="1.879" rotationorder="YXZ" ox="238.77" oy="92.53" />
+
+        
+
+		<hotspot name="hsp_7_2" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 22.png" ath="5.3201" atv="-2.2794" distorted="true" scale="0.7" rotationorder="YXZ" ox="-154.31" oy="-36.59" onclick="loadscene(scene_01_0001,null,MERGE,BLEND(0.5));" />
+
+		<hotspot name="hsp_7_3" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 24.png" ath="4.6949" atv="-1.7795" distorted="true" scale="0.7" rotationorder="YXZ" ox="-48.33" oy="-40.81" onclick="loadscene(scene_03_001,null,MERGE,BLEND(0.5));" />
+
+		<hotspot name="hsp_7_4" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 23.png" ath="4.5350" atv="-1.7261" distorted="true" scale="0.7" rotationorder="YXZ" ox="-147.21" oy="52.58" onclick="loadscene(scene_04_001,null,MERGE,BLEND(0.5));" />
+
+		<hotspot name="hsp_7_5" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 25.png" ath="4.6949" atv="-1.7793" distorted="true" scale="0.7" rotationorder="YXZ" ox="-48.08" oy="52.66" onclick="loadscene(scene_07_001,null,MERGE,BLEND(0.5));" />
+
+		<hotspot name="hsp_7_6" style="addhs" url="%FIRSTXML%/add_hotspot/picture/end.png" ath="4.6949" atv="-1.7261" distorted="true" scale="0.8" rotationorder="YXZ" ox="51.20" oy="76.80" onclick="loadscene(scene_black,null,MERGE,BLEND(0.5));" />
+</scene>
+
+
+
+<scene name="scene_main3" title="main3" onstart="" thumburl="panos/main2.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="5" vlookat="-5" fovtype="MFOV" fov="100" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/main2.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/main2.tiles/pano_%s.jpg" />
+        </image>
+
+    
+        <hotspot name="hsp_7_1" style="addhs" url="%FIRSTXML%/add_hotspot/picture/charEF.png" ath="0.6583" atv="-1.4856" distorted="true" scale="1.879" rotationorder="YXZ" ox="238.77" oy="92.53" />
+
+        <hotspot name="hsp_7_2" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 26.png" ath="5.3201" atv="-2.2794" distorted="true" scale="0.7" rotationorder="YXZ" ox="-154.31" oy="-36.59" onclick="loadscene(scene_02_0001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_3" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 27.png" ath="4.6949" atv="-1.7795" distorted="true" scale="0.7" rotationorder="YXZ" ox="-48.33" oy="-40.81" onclick="loadscene(scene_05_001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_4" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 28.png" ath="4.5350" atv="-1.7261" distorted="true" scale="0.7" rotationorder="YXZ" ox="-147.21" oy="52.58" onclick="loadscene(scene_06_001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_5" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 29.png" ath="4.6949" atv="-1.7793" distorted="true" scale="0.7" rotationorder="YXZ" ox="-48.08" oy="52.66" onclick="loadscene(scene_08_002,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_6" style="addhs" url="%FIRSTXML%/add_hotspot/picture/end.png" ath="4.6949" atv="-1.7261" distorted="true" scale="0.8" rotationorder="YXZ" ox="51.20" oy="76.80" onclick="loadscene(scene_black,null,MERGE,BLEND(0.5));" />
+
+        
+</scene>
+
+
+
+<scene name="scene_main4" title="main4" onstart="" thumburl="panos/main2.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="5" vlookat="-5" fovtype="MFOV" fov="100" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/main2.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/main2.tiles/pano_%s.jpg" />
+        </image>
+
+    
+        <hotspot name="hsp_7_1" style="addhs" url="%FIRSTXML%/add_hotspot/picture/charTM.png" ath="0.6583" atv="-1.4856" distorted="true" scale="1.879" rotationorder="YXZ" ox="238.77" oy="92.53" />
+
+        <hotspot name="hsp_7_2" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 22.png" ath="5.3201" atv="-2.2794" distorted="true" scale="0.7" rotationorder="YXZ" ox="-154.31" oy="-36.59" onclick="loadscene(scene_01_0001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_3" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 24.png" ath="4.6949" atv="-1.7795" distorted="true" scale="0.7" rotationorder="YXZ" ox="-48.33" oy="-40.81" onclick="loadscene(scene_03_001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_4" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 23.png" ath="4.5350" atv="-1.7261" distorted="true" scale="0.7" rotationorder="YXZ" ox="-147.21" oy="52.58" onclick="loadscene(scene_04_001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_5" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 25.png" ath="4.6949" atv="-1.7793" distorted="true" scale="0.7" rotationorder="YXZ" ox="-48.08" oy="52.66" onclick="loadscene(scene_07_001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_6" style="addhs" url="%FIRSTXML%/add_hotspot/picture/end.png" ath="4.6949" atv="-1.7261" distorted="true" scale="0.8" rotationorder="YXZ" ox="51.20" oy="76.80" onclick="loadscene(scene_black,null,MERGE,BLEND(0.5));" />
+
+        
+</scene>
+
+
+
+<scene name="scene_main5" title="main5" onstart="" thumburl="panos/main2.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="5" vlookat="-5" fovtype="MFOV" fov="100" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/main2.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/main2.tiles/pano_%s.jpg" />
+        </image>
+
+    
+        <hotspot name="hsp_7_1" style="addhs" url="%FIRSTXML%/add_hotspot/picture/charEM.png" ath="0.6583" atv="-1.4856" distorted="true" scale="1.879" rotationorder="YXZ" ox="238.77" oy="92.53" />
+
+        <hotspot name="hsp_7_2" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 22.png" ath="5.3201" atv="-2.2794" distorted="true" scale="0.7" rotationorder="YXZ" ox="-154.31" oy="-36.59" onclick="loadscene(scene_01_0001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_3" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 24.png" ath="4.6949" atv="-1.7795" distorted="true" scale="0.7" rotationorder="YXZ" ox="-48.33" oy="-40.81" onclick="loadscene(scene_03_001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_4" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 23.png" ath="4.5350" atv="-1.7261" distorted="true" scale="0.7" rotationorder="YXZ" ox="-147.21" oy="52.58" onclick="loadscene(scene_04_001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_5" style="addhs" url="%FIRSTXML%/add_hotspot/picture/Group 25.png" ath="4.6949" atv="-1.7793" distorted="true" scale="0.7" rotationorder="YXZ" ox="-48.08" oy="52.66" onclick="loadscene(scene_07_001,null,MERGE,BLEND(0.5));" />
+
+        <hotspot name="hsp_7_6" style="addhs" url="%FIRSTXML%/add_hotspot/picture/end.png" ath="4.6949" atv="-1.7261" distorted="true" scale="0.8" rotationorder="YXZ" ox="51.20" oy="76.80" onclick="loadscene(scene_black,null,MERGE,BLEND(0.5));" />
+
+        
+</scene>
+
+
+
+
+
+
+
+
+<scene name="scene_01_0001" title="청계사 입구" onstart="playsound(bgsnd, mp3/01.mp3, 0)" thumburl="panos/01_0001.tiles/thumb.jpg" lat="37.41110056" lng="127.03516833" alt="239.40" heading="0.0">
+
+    <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+
+
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="-10.388" vlookat="4.990" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/01_0001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/01_0001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899828391" style="skin_hotspotstyle" ath="-17.773" atv="-10.071" rotationorder="YXZ" linkedscene="scene_01_0002" linkedscene_hoffset="374.16" use3dtransition="true" linkedscene_spot="spot1899829630" />
+
+    
+        
+        
+    
+        <hotspot name="hsp_3_1" style="vid_hs_addhs" scalez="1.300" ox="-284.70" oy="136.40" scale="1.3" ath="-10.3880" atv="4.9900" chromakey="0x0B9500|0.600|0.200" rz="1.07" videourl="%FIRSTXML%/add_hotspot/video/sachal.mp4" info_ah="sachal.mp4" play_vh="true"  enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+    </scene>
+
+    <scene name="scene_01_0002" title="입구" onstart="" thumburl="panos/01_0002.tiles/thumb.jpg" lat="37.41153667" lng="127.03511556" alt="260.30" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/01_0002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/01_0002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899829630" style="skin_hotspotstyle" ath="176.392" atv="17.94" depth="1000.0" linkedscene="scene_01_0001" linkedscene_spot="spot1899828391" linkedscene_hoffset="-14.16" use3dtransition="true" />
+        <hotspot name="spot1899832308" style="skin_hotspotstyle" ath="-1.117" atv="0.074" depth="1000.0" linkedscene="scene_01_0005_1" linkedscene_spot="spot1899832984" linkedscene_hoffset="353.19" use3dtransition="true" />
+
+    </scene>
+
+    <scene name="scene_01_0005_1" title="법당" onstart="playsound(bgsnd1, mp3/sachal_03.mp3, 1)" thumburl="panos/01_0005_1.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+
+        <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/01_0005_1.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/01_0005_1.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899832984" style="skin_hotspotstyle" ath="172.078" atv="16.623" depth="1000.0" linkedscene="scene_01_0002" linkedscene_spot="spot1899832308" linkedscene_hoffset="6.81" use3dtransition="true" />
+        <hotspot name="spot1899833575" style="skin_hotspotstyle" ath="79.815" atv="5.751" depth="1000.0" linkedscene="scene_01_0007" linkedscene_spot="spot1899833707" linkedscene_hoffset="0.64" use3dtransition="true" />
+
+    </scene>
+
+    <scene name="scene_01_0007" title="01-0007" onstart="playsound(bgsnd1, mp3/sachal_02.mp3, 1)" thumburl="panos/01_0007.tiles/thumb.jpg" lat="37.41212889" lng="127.03561722" alt="267.20" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/01_0007.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/01_0007.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899833707" style="skin_hotspotstyle" ath="-99.543" atv="3.831" depth="1000.0" linkedscene="scene_01_0005_1" linkedscene_spot="spot1899833575" linkedscene_hoffset="359.36" use3dtransition="true" />
+
+    </scene>
+
+    <scene name="scene_02_0001" title="02-0001" onstart="playsound(bgsnd, mp3/02.mp3, 0)" thumburl="panos/02_0001.tiles/thumb.jpg" lat="37.39549139" lng="127.02301889" alt="123.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/02_0001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/02_0001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899836182" ready="true" style="skin_hotspotstyle" capturewheel="false" width="128" height="112" scalez="0.5" ath="-3.4710" atv="3.0060" linkedscene="scene_02_0002" linkedscene_hoffset="0.0" use3dtransition="true" drag_hs="false" colorize="16777215" brightness="1" contrast="1" saturate="1" hue="0" invert="0" sepia="0" />
+
+    
+        <hotspot name="hsp_7_1" style="vid_hs_addhs" ox="107.00" oy="68.00" chromakey="0x0B9500|0.600|0.200" videourl="%FIRSTXML%/add_hotspot/video/E_F_christ.mp4" info_ah="E_F_christ.mp4" play_vh="true" volume_max="1.00" volume="1" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+    </scene>
+
+    <scene name="scene_02_0002" title="02-0002" onstart="playsound(bgsnd1, mp3/GChurch2.mp3, 1)" thumburl="panos/02_0002.tiles/thumb.jpg" lat="37.39563056" lng="127.02347194" alt="136.80" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/02_0002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/02_0002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899836384" style="skin_hotspotstyle" ath="-87.804" atv="7.634" depth="1000.0" linkedscene="scene_02_0001" linkedscene_hoffset="0.0" use3dtransition="true" />
+        <hotspot name="spot1899837796" style="skin_hotspotstyle" ath="0.291" atv="-0.194" depth="1000.0" linkedscene="scene_02_0007" linkedscene_hoffset="0.0" use3dtransition="true" />
+
+    </scene>
+
+    <scene name="scene_02_0007" title="02-0007" onstart="playsound(bgsnd1, mp3/GChurch3.mp3, 1)" thumburl="panos/02_0007.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/02_0007.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/02_0007.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899837953" style="skin_hotspotstyle" ath="-177.828" atv="6.951" depth="1000.0" linkedscene="scene_02_0002" linkedscene_hoffset="0.0" use3dtransition="true" />
+
+    </scene>
+
+    <scene name="scene_03_001" title="03-001" onstart="playsound(bgsnd, mp3/03.mp3, 0)" thumburl="panos/03_001.tiles/thumb.jpg" lat="37.30625000" lng="126.95266667" alt="55.40" heading="0.0">
+
+        <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="-1.199" vlookat="-16.115" fovtype="MFOV" fov="135.014" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/03_001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/03_001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899838967" style="skin_hotspotstyle" ath="-11.488" atv="2.123" rotationorder="YXZ" linkedscene="scene_03_002" linkedscene_hoffset="0.0" use3dtransition="true" />
+
+    
+        <hotspot name="hsp_10_1" style="vid_hs_addhs" ath="-1.1501" atv="-16.0680" scale="1.304" rotationorder="YXZ" ox="79.57" oy="155.98" videourl="%FIRSTXML%/add_hotspot/video/skyRail.mp4" chromakey="0x228B0A|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+    <scene name="scene_03_002" title="03-002" onstart="playsound(bgsnd1, mp3/skyrail_02.mp3, 1)" thumburl="panos/03_002.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+
+        <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/03_002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/03_002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899623368" style="skin_hotspotstyle" ath="0.194" atv="13.872" depth="1000.0" linkedscene="video" linkedscene_hoffset="0.0" use3dtransition="true" />
+        <hotspot name="spot1899839071" style="skin_hotspotstyle" ath="174.08" atv="23.25" depth="1000.0" linkedscene="scene_03_001" linkedscene_hoffset="0.0" use3dtransition="true" />
+
+    </scene>
+
+    <scene name="scene_04_001" title="04_001" onstart="playsound(bgsnd, mp3/04.mp3, 0)" thumburl="panos/04_001.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+
+        <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="25.137" vlookat="1.241" fovtype="MFOV" fov="135.018" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/04_001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/04_001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900297742" style="skin_hotspotstyle" ath="17.166" atv="16.267" rotationorder="YXZ" linkedscene="scene_04_002" linkedscene_lookat="123.91,-2.07,135.02" />
+
+        
+        <hotspot name="hsp_12_1" style="vid_hs_addhs" ath="24.8410" atv="0.3011" scale="1.3" rotationorder="YXZ" ry="-25.14" ox="-289.14" oy="143.14" videourl="%FIRSTXML%/add_hotspot/video/bap.mp4" chromakey="0x0B9500|0.600|0.200" play_vh="true" volume_max="2" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+    <scene name="scene_04_002" title="04_002" onstart="playsound(bgsnd1, mp3/bap_02.mp3, 1)" thumburl="panos/04_002.tiles/thumb.jpg" lat="37.32825000" lng="126.95172222" alt="68.80" heading="0.0">
+
+        <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="124.361" vlookat="4.631" fovtype="MFOV" fov="135.018" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/04_002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/04_002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900297965" style="skin_hotspotstyle" ath="-43.191" atv="25.473" rotationorder="YXZ" linkedscene="scene_04_001" linkedscene_lookat="27.37,2.96,135.02" />
+        <hotspot name="spot1900298323" style="skin_hotspotstyle" ath="136.342" atv="13.473" rotationorder="YXZ" linkedscene="scene_04_003" linkedscene_lookat="3.75,49.29,102.29" />
+
+        
+        
+
+        
+
+    </scene>
+
+    <scene name="scene_04_003" title="04_003" onstart="playsound(bgsnd1, mp3/bap_03.mp3, 1)" thumburl="panos/04_003.tiles/thumb.jpg" lat="37.32833333" lng="126.95169444" alt="74.80" heading="0.0">
+
+        <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+
+
+        <view hlookat="3.853" vlookat="51.026" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/04_003.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/04_003.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900298672" style="skin_hotspotstyle" ath="97.242" atv="10.984" depth="1000.0" linkedscene="scene_04_002" linkedscene_lookat="301.51,0.53,135.02" />
+
+    
+
+    </scene>
+
+    <scene name="scene_05_001" title="05_001" onstart="playsound(bgsnd, mp3/05.mp3, 0)" thumburl="panos/05_001.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="216.596" vlookat="3.920" fovtype="MFOV" fov="120.050" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/05_001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/05_001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900314525" style="skin_hotspotstyle" ath="-145.247" atv="15.614" rotationorder="YXZ" linkedscene="scene_05_002" linkedscene_lookat="459.55,0.73,126.18" />
+
+        
+
+        
+
+        
+
+    
+        <hotspot name="hsp_15_1" style="vid_hs_addhs" ath="-143.3264" atv="3.8424" scale="1.28" rotationorder="YXZ" ox="223.10" oy="37.45" videourl="%FIRSTXML%/add_hotspot/video/E_F_cafe.mp4" chromakey="0x0B9500|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+    <scene name="scene_05_002" title="05_002" onstart="playsound(bgsnd1, mp3/Gcafe2.mp3, 1)" thumburl="panos/05_002.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="459.548" vlookat="0.732" fovtype="MFOV" fov="126.184" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/05_002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/05_002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900303803" style="skin_hotspotstyle" ath="94.574" atv="21.994" depth="1000.0" linkedscene="scene_05_003" linkedscene_spot="spot1900304146" linkedscene_hoffset="-1.58" use3dtransition="true" />
+        <hotspot name="spot1900313811" style="skin_hotspotstyle" ath="-57.087" atv="20.608" depth="1000.0" linkedscene="scene_05_001" linkedscene_lookat="94.13,3.9,120.05" />
+        
+
+        
+
+        
+
+    </scene>
+
+    <scene name="scene_05_003" title="05_003" onstart="" thumburl="panos/05_003.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/05_003.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/05_003.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900304146" style="skin_hotspotstyle" ath="-87.006" atv="27.998" depth="1000.0" linkedscene="scene_05_002" linkedscene_spot="spot1900303803" linkedscene_hoffset="361.58" use3dtransition="true" />
+        <hotspot name="spot1900311874" style="skin_hotspotstyle" ath="114.794" atv="14.392" depth="1000.0" linkedscene="scene_05_004" linkedscene_lookat="4.71,3.1,120.0" />
+        
+
+    </scene>
+
+    <scene name="scene_05_004" title="05_004" onstart="playsound(bgsnd1, mp3/Gcafe3.mp3, 1)" thumburl="panos/05_004.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="5.352" vlookat="4.224" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/05_004.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/05_004.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900312251" style="skin_hotspotstyle" ath="38.66" atv="7.958" depth="1000.0" linkedscene="scene_05_003" linkedscene_lookat="-90.33,1.44,120.0" />
+        <hotspot name="spot1900312805" style="skin_hotspotstyle" ath="-5.465" atv="2.574" depth="1000.0" linkedscene="scene_05_005" linkedscene_lookat="6.34,16.6,120.01" />
+
+        
+
+    </scene>
+
+    <scene name="scene_05_005" title="05_005" onstart="playsound(bgsnd1, mp3/Gcafe4.mp3, 1)" thumburl="panos/05_005.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="6.659" vlookat="23.073" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/05_005.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/05_005.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900313404" style="skin_hotspotstyle" ath="-57.122" atv="2.65" depth="1000.0" linkedscene="scene_05_004" linkedscene_lookat="5.35,4.22,120.0" />
+
+    </scene>
+
+    <scene name="scene_06_001" title="06_001" onstart="playsound(bgsnd, mp3/06.mp3, 0)" thumburl="panos/06_001.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="150.189" vlookat="1.301" fovtype="MFOV" fov="119.975" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/06_001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/06_001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899841454" style="skin_hotspotstyle" ath="141.971" atv="15.658" rotationorder="YXZ" linkedscene="scene_06_002" linkedscene_hoffset="194.58" use3dtransition="true" linkedscene_spot="spot1899841947" />
+
+    
+        <hotspot name="hsp_20_1" style="vid_hs_addhs" ath="154.9832" atv="1.1420" scale="1.228" rotationorder="YXZ" ox="153.02" oy="82.39" videourl="%FIRSTXML%/add_hotspot/video/E_F_duck.mp4" chromakey="0x0B9500|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+    <scene name="scene_06_002" title="06_002" onstart="" thumburl="panos/06_002.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="-58.037" vlookat="1.882" fovtype="MFOV" fov="119.975" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/06_002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/06_002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899841947" style="skin_hotspotstyle" ath="156.552" atv="14.638" depth="1000.0" linkedscene="scene_06_001" linkedscene_spot="spot1899841454" linkedscene_hoffset="165.42" use3dtransition="true" />
+        <hotspot name="spot1900316661" style="skin_hotspotstyle" ath="-61.274" atv="23.181" depth="1000.0" linkedscene="scene_06_003" linkedscene_lookat="123.78,2.7,119.97" />
+        
+
+    </scene>
+
+    <scene name="scene_06_003" title="06_003" onstart="" thumburl="panos/06_003.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="88.110" vlookat="4.944" fovtype="MFOV" fov="119.975" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/06_003.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/06_003.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900317838" style="skin_hotspotstyle" ath="166.086" atv="16.489" depth="1000.0" linkedscene="scene_06_004" linkedscene_lookat="8.8,6.4,120.0" />
+        <hotspot name="spot1900323831" style="skin_hotspotstyle" ath="-164.053" atv="17.089" depth="1000.0" linkedscene="scene_06_002" linkedscene_lookat="-218.8,2.75,119.97" />
+
+        
+
+    </scene>
+
+    <scene name="scene_06_004" title="06_004" onstart="playsound(bgsnd1, mp3/Gduck2.mp3 , 1)" thumburl="panos/06_004.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/06_004.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/06_004.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900322598" style="skin_hotspotstyle" ath="2.557" atv="11.09" depth="1000.0" linkedscene="scene_06_005" linkedscene_lookat="-173.15,21.36,120.0" />
+        <hotspot name="spot1900323477" style="skin_hotspotstyle" ath="-143.789" atv="25.7" depth="1000.0" linkedscene="scene_06_003" linkedscene_lookat="183.55,0.62,119.97" />
+
+    </scene>
+
+    <scene name="scene_06_005" title="06_005" onstart="playsound(bgsnd1, mp3/Gduck3.mp3, 1)" thumburl="panos/06_005.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="-173.149" vlookat="21.356" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/06_005.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/06_005.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900322906" style="skin_hotspotstyle" ath="109.584" atv="1.576" rotationorder="YXZ" linkedscene="scene_06_004" linkedscene_lookat="-141.06,9.79,120.0" />
+
+    </scene>
+
+    <scene name="scene_07_001" title="07-001" onstart="playsound(bgsnd, mp3/07.mp3, 0)" thumburl="panos/07_001.tiles/thumb.jpg" lat="37.30987917" lng="126.95061889" alt="64.60" heading="0.0">
+
+         <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="152.735" vlookat="2.831" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/07_001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/07_001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900331520" style="skin_hotspotstyle" ath="175.282" atv="6.611" rotationorder="YXZ" linkedscene="scene_07_005" linkedscene_hoffset="172.48" use3dtransition="true" linkedscene_spot="spot1900331850" />
+
+        
+
+    <hotspot name="hsp_25_1" style="vid_hs_addhs" ath="123.2913" atv="0.0133" scale="1.044" rotationorder="YXZ" ox="7.07" oy="54.72" videourl="%FIRSTXML%/add_hotspot/video/train.mp4" chromakey="0x0B9500|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+    <scene name="scene_07_003" title="07-003" onstart="playsound(bgsnd1, mp3/train_02.mp3, 1)" thumburl="panos/07_003.tiles/thumb.jpg" lat="37.30853444" lng="126.95083111" alt="47.80" heading="0.0">
+
+         <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/07_003.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/07_003.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900332141" style="skin_hotspotstyle" ath="-162.022" atv="12.966" depth="1000.0" linkedscene="scene_07_005" linkedscene_spot="spot1900331928" linkedscene_hoffset="331.27" use3dtransition="true" />
+
+        
+
+    </scene>
+
+    <scene name="scene_07_005" title="07-005" onstart="playsound(bgsnd1, mp3/train_03.mp3, 1)" thumburl="panos/07_005.tiles/thumb.jpg" lat="37.30963944" lng="126.95063861" alt="67.30" heading="0.0">
+
+         <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/07_005.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/07_005.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900331850" style="skin_hotspotstyle" ath="167.765" atv="6.311" depth="1000.0" linkedscene="scene_07_001" linkedscene_spot="spot1900331520" linkedscene_hoffset="187.52" use3dtransition="true" />
+        <hotspot name="spot1900331928" style="skin_hotspotstyle" ath="-10.757" atv="11.218" depth="1000.0" linkedscene="scene_07_003" linkedscene_spot="spot1900332141" linkedscene_hoffset="28.73" use3dtransition="true" />
+
+    </scene>
+
+    <scene name="scene_08_002" title="08-002" onstart="playsound(bgsnd, mp3/08.mp3, 0)" thumburl="panos/08_002.tiles/thumb.jpg" lat="37.30696056" lng="126.95274806" alt="63.70" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="64.751" vlookat="7.028" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/08_002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/08_002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900324906" style="skin_hotspotstyle" ath="91.816" atv="10.422" rotationorder="YXZ" linkedscene="scene_08_003" linkedscene_lookat="165.42,-1.62,120.0" />
+
+    
+        <hotspot name="hsp_28_1" style="vid_hs_addhs" ath="89.9126" atv="6.0870" scale="1.074" rotationorder="YXZ" ox="183.68" oy="77.42" videourl="%FIRSTXML%/add_hotspot/video/E_F_sanCheck.mp4" chromakey="0x0B9500|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+    <scene name="scene_08_003" title="08-003" onstart="playsound(bgsnd1, mp3/Gpark2.mp3, 1)" thumburl="panos/08_003.tiles/thumb.jpg" lat="37.30802389" lng="126.95201944" alt="66.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="-191.963" vlookat="1.179" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/08_003.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/08_003.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900325928" style="skin_hotspotstyle" ath="-39.134" atv="3.909" depth="1000.0" linkedscene="scene_08_004" linkedscene_lookat="0.0,0.0,120.0" />
+
+    </scene>
+
+    <scene name="scene_08_004" title="08-004" onstart="playsound(bgsnd1, mp3/Gpark3.mp3, 1)" thumburl="panos/08_004.tiles/thumb.jpg" lat="37.30786944" lng="126.95177111" alt="65.20" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/08_004.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/08_004.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900326253" style="skin_hotspotstyle" ath="-177.001" atv="5.363" depth="1000.0" linkedscene="scene_08_002" linkedscene_lookat="-332.28,-2.96,120.0" />
+
+    </scene>
+
+
+
+    <scene name="video" title="의왕 짚라인" type="video" onstart="" thumburl="vod/thumb.jpg" lat="" lng="" heading="0.0">
+
+        <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="DFOV" fov="140" fovmin="75" fovmax="150" distortion="0.0" vlookatmin="0" vlookatmax="90" limitview="lookat" />
+        
+        <image>
+            <sphere url="plugin:video" />
+        </image>
+
+        <plugin name="video" keep="false"
+            url.html5="skin/skin_plugins/hdvr_videoplayer.js"
+            url.flash="skin/skin_plugins/videoplayer.swf"
+            videourl="vod/03-001_8k.mp4"
+            videourl.mobile="vod/03-001_8k.mp4"
+            pausedonstart="false"
+            loop="true"
+            volume="1.0"
+            onloaded=""
+            />
+            </scene>
+
+
+    <scene name="video2" title="가나안 오리" type="video" onstart="" thumburl="vod/thumb.jpg" lat="" lng="" heading="0.0">
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="DFOV" fov="140" fovmin="75" fovmax="150" distortion="0.0" vlookatmin="0" vlookatmax="90" limitview="lookat" />
+        
+        <image>
+            <sphere url="plugin:video" />
+        </image>
+
+        <plugin name="video" keep="false"
+            url.html5="skin/skin_plugins/hdvr_videoplayer.js"
+            url.flash="skin/skin_plugins/videoplayer.swf"
+            videourl="vod/06-001_8k.mp4"
+            videourl.mobile="vod/06-001_4k.mp4"
+            pausedonstart="false"
+            loop="true"
+            volume="1.0"
+            onloaded=""
+            />
+            </scene>
+
+
+    
+
+
+
+
+
+
+
+
+
+<!-- 여기부터 남자 코드 내용 -->
+
+
+<scene name="scene_01_0001_m" title="청계사 입구" onstart="playsound(bgsnd, mp3/01.mp3, 0)" thumburl="panos/01_0001.tiles/thumb.jpg" lat="37.41110056" lng="127.03516833" alt="239.40" heading="0.0">
+
+
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="-10.388" vlookat="4.990" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/01_0001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/01_0001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899828391" style="skin_hotspotstyle" ath="-17.773" atv="-10.071" depth="1000.0" linkedscene="scene_01_0002" linkedscene_spot="spot1899829630" linkedscene_hoffset="374.16" use3dtransition="true" />
+
+    
+        <hotspot name="hsp_3_1" style="vid_hs_addhs" scalez="1.300" ox="-284.70" oy="136.40" scale="1.3" ath="-10.3880" atv="4.9900" chromakey="0x0B9500|0.600|0.200" rz="1.07" videourl="%FIRSTXML%/add_hotspot/video/m_sachal.mp4" info_ah="m_sachal.mp4" play_vh="true"  enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+    </scene>
+
+
+    <scene name="scene_01_0002_m" title="입구" onstart="" thumburl="panos/01_0002.tiles/thumb.jpg" lat="37.41153667" lng="127.03511556" alt="260.30" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/01_0002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/01_0002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899829630" style="skin_hotspotstyle" ath="176.392" atv="17.94" depth="1000.0" linkedscene="scene_01_0001" linkedscene_spot="spot1899828391" linkedscene_hoffset="-14.16" use3dtransition="true" />
+        <hotspot name="spot1899832308" style="skin_hotspotstyle" ath="-1.117" atv="0.074" depth="1000.0" linkedscene="scene_01_0005_1" linkedscene_spot="spot1899832984" linkedscene_hoffset="353.19" use3dtransition="true" />
+
+    </scene>
+
+
+    <scene name="scene_01_0005_1_m" title="법당" onstart="playsound(bgsnd1, mp3/sachal_03_m.mp3, 1)" thumburl="panos/01_0005_1.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/01_0005_1.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/01_0005_1.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899832984" style="skin_hotspotstyle" ath="172.078" atv="16.623" depth="1000.0" linkedscene="scene_01_0002" linkedscene_spot="spot1899832308" linkedscene_hoffset="6.81" use3dtransition="true" />
+        <hotspot name="spot1899833575" style="skin_hotspotstyle" ath="79.815" atv="5.751" depth="1000.0" linkedscene="scene_01_0007" linkedscene_spot="spot1899833707" linkedscene_hoffset="0.64" use3dtransition="true" />
+
+    </scene>
+
+
+    <scene name="scene_01_0007_m" title="01-0007_m" onstart="playsound(bgsnd1, mp3/sachal_02_m.mp3, 1)" thumburl="panos/01_0007.tiles/thumb.jpg" lat="37.41212889" lng="127.03561722" alt="267.20" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/01_0007.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/01_0007.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899833707" style="skin_hotspotstyle" ath="-99.543" atv="3.831" depth="1000.0" linkedscene="scene_01_0005_1" linkedscene_spot="spot1899833575" linkedscene_hoffset="359.36" use3dtransition="true" />
+
+    </scene>
+
+
+    <scene name="scene_02_0001_m" title="02-0001_m" onstart="playsound(bgsnd, mp3/02.mp3, 0)" thumburl="panos/02_0001.tiles/thumb.jpg" lat="37.39549139" lng="127.02301889" alt="123.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/02_0001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/02_0001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899836182" ready="true" style="skin_hotspotstyle" capturewheel="false" width="128" height="112" scalez="0.5" ath="-3.4710" atv="3.0060" linkedscene="scene_02_0002" linkedscene_hoffset="0.0" use3dtransition="true" drag_hs="false" colorize="16777215" brightness="1" contrast="1" saturate="1" hue="0" invert="0" sepia="0" />
+
+    
+        <hotspot name="hsp_7_1" style="vid_hs_addhs" ox="107.00" oy="68.00" chromakey="0x0B9500|0.600|0.200" videourl="%FIRSTXML%/add_hotspot/video/E_M_christ.mp4" info_ah="E_M_christ.mp4" play_vh="true" volume_max="1.00" volume="1" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+    </scene>
+
+
+        <scene name="scene_02_0002_m" title="02-0002_m" onstart="playsound(bgsnd1, mp3/Church2.mp3, 1)" thumburl="panos/02_0002.tiles/thumb.jpg" lat="37.39563056" lng="127.02347194" alt="136.80" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/02_0002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/02_0002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899836384" style="skin_hotspotstyle" ath="-87.804" atv="7.634" depth="1000.0" linkedscene="scene_02_0001" linkedscene_hoffset="0.0" use3dtransition="true" />
+        <hotspot name="spot1899837796" style="skin_hotspotstyle" ath="0.291" atv="-0.194" depth="1000.0" linkedscene="scene_02_0007" linkedscene_hoffset="0.0" use3dtransition="true" />
+
+    </scene>
+
+
+        <scene name="scene_02_0007_m" title="02-0007_m" onstart="playsound(bgsnd1, mp3/Church3.mp3, 1)" thumburl="panos/02_0007.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/02_0007.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/02_0007.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899837953" style="skin_hotspotstyle" ath="-177.828" atv="6.951" depth="1000.0" linkedscene="scene_02_0002" linkedscene_hoffset="0.0" use3dtransition="true" />
+
+    </scene>
+
+
+        <scene name="scene_03_001_m" title="03-001_m" onstart="playsound(bgsnd, mp3/03.mp3, 0)" thumburl="panos/03_001.tiles/thumb.jpg" lat="37.30625000" lng="126.95266667" alt="55.40" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="-1.199" vlookat="-16.115" fovtype="MFOV" fov="135.014" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/03_001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/03_001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899838967" style="skin_hotspotstyle" ath="-11.488" atv="2.123" rotationorder="YXZ" linkedscene="scene_03_002" linkedscene_hoffset="0.0" use3dtransition="true" />
+
+    
+        <hotspot name="hsp_10_1" style="vid_hs_addhs" ath="-1.1501" atv="-16.0680" scale="1.304" rotationorder="YXZ" ox="79.57" oy="155.98" videourl="%FIRSTXML%/add_hotspot/video/m_skyRail.mp4" chromakey="0x228B0A|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+
+    <scene name="scene_03_002_m" title="03-002_m" onstart="playsound(bgsnd1, mp3/skyrail_02_m.mp3, 1)" thumburl="panos/03_002.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/03_002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/03_002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899623368" style="skin_hotspotstyle" ath="0.194" atv="13.872" depth="1000.0" linkedscene="video" linkedscene_hoffset="0.0" use3dtransition="true" />
+        <hotspot name="spot1899839071" style="skin_hotspotstyle" ath="174.08" atv="23.25" depth="1000.0" linkedscene="scene_03_001" linkedscene_hoffset="0.0" use3dtransition="true" />
+
+    </scene>
+
+
+        <scene name="scene_04_001_m" title="04_001_m" onstart="playsound(bgsnd, mp3/04.mp3, 0)" thumburl="panos/04_001.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="25.137" vlookat="1.241" fovtype="MFOV" fov="135.018" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/04_001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/04_001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900297742" style="skin_hotspotstyle" ath="17.166" atv="16.267" rotationorder="YXZ" linkedscene="scene_04_002" linkedscene_lookat="123.91,-2.07,135.02" />
+
+        <hotspot name="hsp_12_1" style="vid_hs_addhs" ath="24.8410" atv="0.3011" scale="1.3" rotationorder="YXZ" ry="-25.14" ox="-289.14" oy="143.14" videourl="%FIRSTXML%/add_hotspot/video/m_bap.mp4" chromakey="0x0B9500|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+
+    <scene name="scene_04_002_m" title="04_002_m" onstart="playsound(bgsnd1, mp3/bap_02_m.mp3, 1)" thumburl="panos/04_002.tiles/thumb.jpg" lat="37.32825000" lng="126.95172222" alt="68.80" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="124.361" vlookat="4.631" fovtype="MFOV" fov="135.018" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/04_002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/04_002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900297965" style="skin_hotspotstyle" ath="-43.191" atv="25.473" rotationorder="YXZ" linkedscene="scene_04_001" linkedscene_lookat="27.37,2.96,135.02" />
+        <hotspot name="spot1900298323" style="skin_hotspotstyle" ath="136.342" atv="13.473" rotationorder="YXZ" linkedscene="scene_04_003" linkedscene_lookat="3.75,49.29,102.29" />
+
+        </scene>
+
+
+            <scene name="scene_04_003_m" title="04_003_m" onstart="playsound(bgsnd1, mp3/bap_03_m.mp3, 1)" thumburl="panos/04_003.tiles/thumb.jpg" lat="37.32833333" lng="126.95169444" alt="74.80" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="3.853" vlookat="51.026" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/04_003.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/04_003.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900298672" style="skin_hotspotstyle" ath="97.242" atv="10.984" depth="1000.0" linkedscene="scene_04_002" linkedscene_lookat="301.51,0.53,135.02" />
+
+    </scene>
+
+
+        <scene name="scene_05_001_m" title="05_001_m" onstart="playsound(bgsnd, mp3/05.mp3, 0)" thumburl="panos/05_001.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="216.596" vlookat="3.920" fovtype="MFOV" fov="120.050" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/05_001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/05_001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900314525" style="skin_hotspotstyle" ath="-145.247" atv="15.614" rotationorder="YXZ" linkedscene="scene_05_002" linkedscene_lookat="459.55,0.73,126.18" />
+
+        
+        <hotspot name="hsp_15_1" style="vid_hs_addhs" ath="-143.3264" atv="3.8424" scale="1.28" rotationorder="YXZ" ox="223.10" oy="37.45" videourl="%FIRSTXML%/add_hotspot/video/E_M_cafe.mp4" chromakey="0x0B9500|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+
+    <scene name="scene_05_002_m" title="05_002_m" onstart="playsound(bgsnd1, mp3/Cafe2.mp3, 1)" thumburl="panos/05_002.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="459.548" vlookat="0.732" fovtype="MFOV" fov="126.184" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/05_002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/05_002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900303803" style="skin_hotspotstyle" ath="94.574" atv="21.994" depth="1000.0" linkedscene="scene_05_003" linkedscene_spot="spot1900304146" linkedscene_hoffset="-1.58" use3dtransition="true" />
+        <hotspot name="spot1900313811" style="skin_hotspotstyle" ath="-57.087" atv="20.608" depth="1000.0" linkedscene="scene_05_001" linkedscene_lookat="94.13,3.9,120.05" />
+        
+    </scene>
+
+
+        <scene name="scene_05_003_m" title="05_003_m" onstart="" thumburl="panos/05_003.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/05_003.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/05_003.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900304146" style="skin_hotspotstyle" ath="-87.006" atv="27.998" depth="1000.0" linkedscene="scene_05_002" linkedscene_spot="spot1900303803" linkedscene_hoffset="361.58" use3dtransition="true" />
+        <hotspot name="spot1900311874" style="skin_hotspotstyle" ath="114.794" atv="14.392" depth="1000.0" linkedscene="scene_05_004" linkedscene_lookat="4.71,3.1,120.0" />
+        
+    </scene>
+
+
+    <scene name="scene_05_004_m" title="05_004_m" onstart="playsound(bgsnd1, mp3/Cafe3.mp3, 1)" thumburl="panos/05_004.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="5.352" vlookat="4.224" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/05_004.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/05_004.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900312251" style="skin_hotspotstyle" ath="38.66" atv="7.958" depth="1000.0" linkedscene="scene_05_003" linkedscene_lookat="-90.33,1.44,120.0" />
+        <hotspot name="spot1900312805" style="skin_hotspotstyle" ath="-5.465" atv="2.574" depth="1000.0" linkedscene="scene_05_005" linkedscene_lookat="6.34,16.6,120.01" />
+
+    </scene>
+
+
+    <scene name="scene_05_005_m" title="05_005_m" onstart="playsound(bgsnd1, mp3/Cafe14.mp3, 1)" thumburl="panos/05_005.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="6.659" vlookat="23.073" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/05_005.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/05_005.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900313404" style="skin_hotspotstyle" ath="-57.122" atv="2.65" depth="1000.0" linkedscene="scene_05_004" linkedscene_lookat="5.35,4.22,120.0" />
+
+    </scene>
+
+
+    <scene name="scene_06_001_m" title="06_001_m" onstart="playsound(bgsnd, mp3/06.mp3, 0)" thumburl="panos/06_001.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="150.189" vlookat="1.301" fovtype="MFOV" fov="119.975" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/06_001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/06_001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899841454" style="skin_hotspotstyle" ath="141.971" atv="15.658" rotationorder="YXZ" linkedscene="scene_06_002" linkedscene_hoffset="194.58" use3dtransition="true" linkedscene_spot="spot1899841947" />
+
+    
+        <hotspot name="hsp_20_1" style="vid_hs_addhs" ath="154.9832" atv="1.1420" scale="1.228" rotationorder="YXZ" ox="153.02" oy="82.39" videourl="%FIRSTXML%/add_hotspot/video/E_M_duck.mp4" chromakey="0x0B9500|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+
+    <scene name="scene_06_002_m" title="06_002_m" onstart="" thumburl="panos/06_002.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="-58.037" vlookat="1.882" fovtype="MFOV" fov="119.975" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/06_002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/06_002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1899841947" style="skin_hotspotstyle" ath="156.552" atv="14.638" depth="1000.0" linkedscene="scene_06_001" linkedscene_spot="spot1899841454" linkedscene_hoffset="165.42" use3dtransition="true" />
+        <hotspot name="spot1900316661" style="skin_hotspotstyle" ath="-61.274" atv="23.181" depth="1000.0" linkedscene="scene_06_003" linkedscene_lookat="123.78,2.7,119.97" />
+        
+    </scene>
+
+    <scene name="scene_06_003_m" title="06_003_m" onstart="" thumburl="panos/06_003.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="88.110" vlookat="4.944" fovtype="MFOV" fov="119.975" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/06_003.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/06_003.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900317838" style="skin_hotspotstyle" ath="166.086" atv="16.489" depth="1000.0" linkedscene="scene_06_004" linkedscene_lookat="8.8,6.4,120.0" />
+        <hotspot name="spot1900323831" style="skin_hotspotstyle" ath="-164.053" atv="17.089" depth="1000.0" linkedscene="scene_06_002" linkedscene_lookat="-218.8,2.75,119.97" />
+
+    </scene>
+
+    <scene name="scene_06_004_m" title="06_004_m" onstart="playsound(bgsnd1, mp3/Duck2.mp3 , 1)" thumburl="panos/06_004.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/06_004.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/06_004.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900322598" style="skin_hotspotstyle" ath="2.557" atv="11.09" depth="1000.0" linkedscene="scene_06_005" linkedscene_lookat="-173.15,21.36,120.0" />
+        <hotspot name="spot1900323477" style="skin_hotspotstyle" ath="-143.789" atv="25.7" depth="1000.0" linkedscene="scene_06_003" linkedscene_lookat="183.55,0.62,119.97" />
+
+    </scene>
+
+
+    <scene name="scene_06_005_m" title="06_005_m" onstart="playsound(bgsnd1, mp3/Duck3.mp3, 1)" thumburl="panos/06_005.tiles/thumb.jpg" lat="-0.00000000" lng="-0.00000000" alt="0.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="-173.149" vlookat="21.356" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/06_005.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/06_005.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900322906" style="skin_hotspotstyle" ath="109.584" atv="1.576" rotationorder="YXZ" linkedscene="scene_06_004" linkedscene_lookat="-141.06,9.79,120.0" />
+
+    </scene>
+
+
+    <scene name="scene_07_001_m" title="07-001_m" onstart="playsound(bgsnd, mp3/07.mp3, 0)" thumburl="panos/07_001.tiles/thumb.jpg" lat="37.30987917" lng="126.95061889" alt="64.60" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="152.735" vlookat="2.831" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/07_001.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/07_001.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900331520" style="skin_hotspotstyle" ath="175.282" atv="6.611" rotationorder="YXZ" linkedscene="scene_07_005" linkedscene_hoffset="172.48" use3dtransition="true" linkedscene_spot="spot1900331850" />
+
+    <hotspot name="hsp_25_1" style="vid_hs_addhs" ath="123.2913" atv="0.0133" scale="1.044" rotationorder="YXZ" ox="7.07" oy="54.72" videourl="%FIRSTXML%/add_hotspot/video/m_train.mp4" chromakey="0x0B9500|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+
+    <scene name="scene_07_003_m" title="07-003_m" onstart="playsound(bgsnd1, mp3/train_02_m.mp3, 1)" thumburl="panos/07_003.tiles/thumb.jpg" lat="37.30853444" lng="126.95083111" alt="47.80" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/07_003.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/07_003.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900332141" style="skin_hotspotstyle" ath="-162.022" atv="12.966" depth="1000.0" linkedscene="scene_07_005" linkedscene_spot="spot1900331928" linkedscene_hoffset="331.27" use3dtransition="true" />
+
+    </scene>
+
+
+    <scene name="scene_07_005_m" title="07-005_m" onstart="playsound(bgsnd1, mp3/train_03_m.mp3, 1)" thumburl="panos/07_005.tiles/thumb.jpg" lat="37.30963944" lng="126.95063861" alt="67.30" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/07_005.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/07_005.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900331850" style="skin_hotspotstyle" ath="167.765" atv="6.311" depth="1000.0" linkedscene="scene_07_001" linkedscene_spot="spot1900331520" linkedscene_hoffset="187.52" use3dtransition="true" />
+        <hotspot name="spot1900331928" style="skin_hotspotstyle" ath="-10.757" atv="11.218" depth="1000.0" linkedscene="scene_07_003" linkedscene_spot="spot1900332141" linkedscene_hoffset="28.73" use3dtransition="true" />
+
+    </scene>
+
+
+    <scene name="scene_08_002_m" title="08-002_m" onstart="playsound(bgsnd, mp3/08.mp3, 0)" thumburl="panos/08_002.tiles/thumb.jpg" lat="37.30696056" lng="126.95274806" alt="63.70" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="64.751" vlookat="7.028" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/08_002.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/08_002.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900324906" style="skin_hotspotstyle" ath="91.816" atv="10.422" rotationorder="YXZ" linkedscene="scene_08_003" linkedscene_lookat="165.42,-1.62,120.0" />
+
+    
+        <hotspot name="hsp_28_1" style="vid_hs_addhs" ath="89.9126" atv="6.0870" scale="1.074" rotationorder="YXZ" ox="183.68" oy="77.42" videourl="%FIRSTXML%/add_hotspot/video/E_M_sanCheck.mp4" chromakey="0x0B9500|0.600|0.200" play_vh="true" volume_max="1.00" enabled="false"  pausedonstart="false"  handcursor="false"  autoresume="true" />
+</scene>
+
+
+    <scene name="scene_08_003_m" title="08-003_m" onstart="playsound(bgsnd1, mp3/Park2.mp3, 1)" thumburl="panos/08_003.tiles/thumb.jpg" lat="37.30802389" lng="126.95201944" alt="66.00" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="-191.963" vlookat="1.179" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/08_003.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/08_003.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900325928" style="skin_hotspotstyle" ath="-39.134" atv="3.909" depth="1000.0" linkedscene="scene_08_004" linkedscene_lookat="0.0,0.0,120.0" />
+
+    </scene>
+
+
+    <scene name="scene_08_004_m" title="08-004_m" onstart="playsound(bgsnd1, mp3/Park3.mp3, 1)" thumburl="panos/08_004.tiles/thumb.jpg" lat="37.30786944" lng="126.95177111" alt="65.20" heading="0.0">
+        
+        <control bouncinglimits="calc:image.cube ? true : false" />
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+        <preview url="panos/08_004.tiles/preview.jpg" />
+
+        <image>
+            <cube url="panos/08_004.tiles/pano_%s.jpg" />
+        </image>
+
+        <hotspot name="spot1900326253" style="skin_hotspotstyle" ath="-177.001" atv="5.363" depth="1000.0" linkedscene="scene_08_002" linkedscene_lookat="-332.28,-2.96,120.0" />
+
+    </scene>
+
+
+        <scene name="video" title="의왕 짚라인" type="video" onstart="" thumburl="vod/thumb.jpg" lat="" lng="" heading="0.0">
+
+            <layer name="pbl" url="img/select.png" alpha="1.0" align="centertop" x="0" y="-0" keep="false" bgroundedge="10" scale="1" enabled="true" onclick="loadscene(scene_main2,null,MERGE,BLEND(1.5, easeInCubic)));" scale.no-mobile="1" scale.mobile="0.4" />
+
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="DFOV" fov="140" fovmin="75" fovmax="150" distortion="0.0" vlookatmin="0" vlookatmax="90" limitview="lookat" />
+        
+        <image>
+            <sphere url="plugin:video" />
+        </image>
+
+        <plugin name="video" keep="false"
+            url.html5="skin/skin_plugins/hdvr_videoplayer.js"
+            url.flash="skin/skin_plugins/videoplayer.swf"
+            videourl="vod/03-001_8k.mp4"
+            videourl.mobile="vod/03-001_8k.mp4"
+            pausedonstart="false"
+            loop="true"
+            volume="1.0"
+            onloaded=""
+            />
+            </scene>
+
+    <scene name="video2" title="가나안 오리" type="video" onstart="" thumburl="vod/thumb.jpg" lat="" lng="" heading="0.0">
+
+        <view hlookat="0.0" vlookat="0.0" fovtype="DFOV" fov="140" fovmin="75" fovmax="150" distortion="0.0" vlookatmin="0" vlookatmax="90" limitview="lookat" />
+        
+        <image>
+            <sphere url="plugin:video" />
+        </image>
+
+        <plugin name="video" keep="false"
+            url.html5="skin/skin_plugins/hdvr_videoplayer.js"
+            url.flash="skin/skin_plugins/videoplayer.swf"
+            videourl="vod/06-001_8k.mp4"
+            videourl.mobile="vod/06-001_4k.mp4"
+            pausedonstart="false"
+            loop="true"
+            volume="1.0"
+            onloaded=""
+            />
+            </scene>
+
+
+</krpano>
+
+
